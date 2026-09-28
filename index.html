@@ -863,43 +863,120 @@ function closeAdminModal() {
             document.getElementById('confirm-modal').classList.add('hidden');
         }
 
-        async function verifyAdminPin() {
-            const pin = document.getElementById('admin-pin').value;
-            showLoading("Memverifikasi PIN...");
-            
-            if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-                try {
-                    const res = await fetch(gasApiUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: "verifyPin", pin: pin })
-                    });
-                    const data = await res.json();
-                    if (data.success) {
-                        isAdminLoggedIn = true;
-                        document.getElementById('admin-login-view').classList.add('hidden');
-                        document.getElementById('admin-content-view').classList.remove('hidden');
-                        renderAdminTables();
-                        showToast("Berhasil masuk sebagai Admin!", "success");
-                        return;
-                    }
-                } catch(e) {
-                    console.error(e);
-                } finally {
-                    hideLoading();
-                }
-            }
+        // VERIFIKASI PIN ADMIN (SUDAH DIPERBAIKI)
+async function verifyAdminPin() {
+    const pin = document.getElementById('admin-pin').value.trim();
+    if (!pin) {
+        showToast("Masukkan PIN terlebih dahulu!", "error");
+        return;
+    }
 
-            if (pin === "1234") { 
+    showLoading("Memverifikasi PIN...");
+    
+    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+        try {
+            const res = await fetch(gasApiUrl, {
+                method: 'POST',
+                body: JSON.stringify({ action: "verifyPin", pin: pin })
+            });
+            const data = await res.json();
+            
+            if (data.success) {
                 isAdminLoggedIn = true;
+                // Simpan PIN terbaru di localStorage sebagai fallback
+                localStorage.setItem('katalog_admin_pin', pin);
+                
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-content-view').classList.remove('hidden');
                 renderAdminTables();
                 showToast("Berhasil masuk sebagai Admin!", "success");
+                hideLoading();
+                return;
             } else {
                 showToast("PIN Admin Salah!", "error");
+                hideLoading();
+                return;
             }
+        } catch(e) {
+            console.error("Gagal terhubung ke GAS:", e);
+        }
+    }
+
+    // FALLBACK LOKAL: Gunakan PIN yang tersimpan di localStorage (default: 1234 jika belum pernah diubah)
+    const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
+    if (pin === savedPin) { 
+        isAdminLoggedIn = true;
+        document.getElementById('admin-login-view').classList.add('hidden');
+        document.getElementById('admin-content-view').classList.remove('hidden');
+        renderAdminTables();
+        showToast("Berhasil masuk sebagai Admin!", "success");
+    } else {
+        showToast("PIN Admin Salah!", "error");
+    }
+    hideLoading();
+}
+
+// PROSES GANTI PIN ADMIN (SUDAH DIPERBAIKI)
+async function changeAdminPin() {
+    const oldPin = document.getElementById('pin-old').value.trim();
+    const newPin = document.getElementById('pin-new').value.trim();
+    const confirmPin = document.getElementById('pin-confirm').value.trim();
+
+    if (!oldPin || !newPin || !confirmPin) {
+        showToast("Semua kolom PIN harus diisi!", "error");
+        return;
+    }
+
+    if (newPin !== confirmPin) {
+        showToast("Konfirmasi PIN baru tidak cocok!", "error");
+        return;
+    }
+
+    showLoading("Memperbarui PIN Admin...");
+
+    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+        try {
+            const res = await fetch(gasApiUrl, {
+                method: 'POST',
+                body: JSON.stringify({
+                    action: "changePin",
+                    oldPin: oldPin,
+                    newPin: newPin
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                // Perbarui juga PIN di penyimpanan lokal browser
+                localStorage.setItem('katalog_admin_pin', newPin);
+                
+                showToast(data.message || "PIN berhasil diperbarui!", "success");
+                document.getElementById('pin-old').value = "";
+                document.getElementById('pin-new').value = "";
+                document.getElementById('pin-confirm').value = "";
+            } else {
+                showToast(data.message || "Gagal memperbarui PIN! PIN lama salah.", "error");
+            }
+        } catch(e) {
+            console.error(e);
+            showToast("Gagal terhubung ke server!", "error");
+        } finally {
             hideLoading();
         }
+    } else {
+        // Jika mode lokal tanpa GAS
+        const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
+        if (oldPin === savedPin) {
+            localStorage.setItem('katalog_admin_pin', newPin);
+            showToast("PIN berhasil diperbarui secara lokal!", "success");
+            document.getElementById('pin-old').value = "";
+            document.getElementById('pin-new').value = "";
+            document.getElementById('pin-confirm').value = "";
+        } else {
+            showToast("PIN Lama salah!", "error");
+        }
+        hideLoading();
+    }
+}
 
         function switchAdminTab(tab) {
             const tabProducts = document.getElementById('admin-tab-products');
