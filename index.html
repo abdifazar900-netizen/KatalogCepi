@@ -247,7 +247,7 @@
                     </div>
                 </div>
             </div>
-        </area>
+        </div>
     </div>
 
     <!-- ADMIN PANEL MODAL -->
@@ -437,8 +437,8 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori</label>
                         <select id="form-category" required class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none bg-white">
                             <option value="Cleaning Tools">Cleaning Tools</option>
-                            <option value="Elektronik">Elektronik</option>
-                            <option value="Tehnic & Tools">Technics & Tools</option>
+                            <option value="Electronic">Electronic</option>
+                            <option value="Technics & Tools">Technics & Tools</option>
                             <option value="Other Product">Other Product</option>
                         </select>
                     </div>
@@ -497,8 +497,8 @@
 
         const defaultCategoryAdmins = {
             "Cleaning Tools": "6281234567801",
-            "Elektronik": "6281234567802",
-            "Tehnic & Tools": "6281234567803",
+            "Electronic": "6281234567802",
+            "Technics & Tools": "6281234567803",
             "Other Product": "6281234567804"
         };
 
@@ -591,8 +591,8 @@
             const categoryContainer = document.getElementById('landing-category-buttons');
             const categories = [
                 { id: "Cleaning Tools", name: "Cleaning Tools", icon: "fa-broom", desc: "Peralatan & perlengkapan kebersihan" },
-                { id: "Elektronik", name: "Elektronik", icon: "fa-laptop", desc: "Gadget, perlengkapan & audio" },
-                { id: "Tehnic & Tools", name: "Tehnic & Tools", icon: "fa-wrench", desc: "Suku cadang & mesin teknik" },
+                { id: "Electronic", name: "Electronic", icon: "fa-laptop", desc: "Gadget, perlengkapan & audio" },
+                { id: "Technics & Tools", name: "Technics & Tools", icon: "fa-wrench", desc: "Suku cadang & mesin teknik" },
                 { id: "Other Product", name: "Other Product", icon: "fa-boxes-stacked", desc: "Berbagai produk pilihan lainnya" }
             ];
 
@@ -996,7 +996,7 @@
             document.getElementById('setting-about-text').value = companyProfile.about || "";
 
             const categoryWaContainer = document.getElementById('category-wa-settings-container');
-            const categories = ["Cleaning Tools", "Elektronik", "Tehnic & Tools", "Other Product"];
+            const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
 
             categoryWaContainer.innerHTML = categories.map(cat => {
                 const currentPhone = categoryAdmins[cat] || "";
@@ -1015,7 +1015,7 @@
             companyProfile.logo = document.getElementById('setting-company-logo').value.trim();
             companyProfile.about = document.getElementById('setting-about-text').value.trim();
 
-            const categories = ["Cleaning Tools", "Elektronik", "Tehnic & Tools", "Other Product"];
+            const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
             categories.forEach(cat => {
                 const val = document.getElementById(`wa-input-${cat}`).value.trim();
                 categoryAdmins[cat] = val;
