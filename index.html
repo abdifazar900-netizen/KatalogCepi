@@ -123,7 +123,7 @@
                 <span class="hidden sm:block text-xs text-slate-400 font-medium">Klik kategori untuk melihat produk</span>
             </div>
 
-            <!-- Grid Kategori Buttons (Full Width on Desktop 4 Columns) -->
+            <!-- Grid Kategori Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" id="landing-category-buttons">
                 <!-- Dynamic Category Cards generated via JS -->
             </div>
@@ -138,7 +138,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 2. HALAMAN KATALOG PRODUK (HANYA KATEGORI TERPILIH) -->
+    <!-- 2. HALAMAN KATALOG PRODUK -->
     <!-- ========================================== -->
     <div id="catalog-screen" class="hidden flex-1 flex-col">
         
@@ -174,7 +174,6 @@
         <!-- MAIN CATALOG CONTENT -->
         <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
             
-            <!-- Category Title Header (TANPA TOMBOL TAB KATEGORI KARENA SUDAH DIPISAH) -->
             <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-6 mb-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <span class="text-[10px] font-bold text-brand-400 uppercase tracking-widest block mb-1">KATALOG PRODUK</span>
@@ -199,7 +198,7 @@
 
             <!-- Product Grid -->
             <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                <!-- Dynamic Product Cards Go Here -->
+                <!-- Dynamic Product Cards -->
             </div>
 
             <!-- Empty State -->
@@ -229,12 +228,10 @@
     <div id="product-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transition-all transform my-auto">
             <div class="relative flex flex-col md:flex-row">
-                <!-- Close Button -->
                 <button onclick="closeProductModal()" class="absolute top-3 right-3 z-10 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-slate-600 shadow transition">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
 
-                <!-- Modal Image -->
                 <div class="md:w-1/2 bg-slate-100 relative min-h-[260px] md:min-h-[380px] flex items-center justify-center">
                     <img id="modal-img" src="" alt="Produk" class="w-full h-full object-cover">
                     <span id="modal-badge" class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow">
@@ -242,7 +239,6 @@
                     </span>
                 </div>
 
-                <!-- Modal Details -->
                 <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
                     <div>
                         <span id="modal-category" class="text-[10px] font-bold tracking-wider text-brand-600 uppercase bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200">
@@ -250,13 +246,11 @@
                         </span>
                         <h3 id="modal-title" class="text-xl font-bold text-slate-900 mt-2">Nama Produk</h3>
                         
-                        <!-- Price Section -->
                         <div class="mt-3 flex items-baseline space-x-2">
                             <span id="modal-discount-price" class="text-2xl font-black text-brand-600">Rp 0</span>
                             <span id="modal-original-price" class="text-sm font-medium text-slate-400 line-through">Rp 0</span>
                         </div>
 
-                        <!-- Description -->
                         <div class="mt-4 border-t border-slate-100 pt-3">
                             <h4 class="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Deskripsi Produk</h4>
                             <p id="modal-desc" class="text-xs text-slate-600 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1">
@@ -265,7 +259,6 @@
                         </div>
                     </div>
 
-                    <!-- CTA Action -->
                     <div class="pt-2">
                         <button id="modal-wa-btn" onclick="orderViaWA()" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2 text-sm">
                             <i class="fa-brands fa-whatsapp text-lg"></i>
@@ -283,7 +276,6 @@
     <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col my-auto max-h-[90vh]">
             
-            <!-- Admin Header -->
             <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-xl bg-brand-500 text-slate-900 flex items-center justify-center font-bold">
@@ -299,7 +291,7 @@
                 </button>
             </div>
 
-            <!-- Admin Login View -->
+            <!-- Login View -->
             <div id="admin-login-view" class="p-8 max-w-sm mx-auto w-full text-center space-y-4">
                 <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-700 mx-auto text-xl">
                     <i class="fa-solid fa-lock"></i>
@@ -314,9 +306,8 @@
                 </button>
             </div>
 
-            <!-- Admin Panel Content (After Login) -->
+            <!-- Admin Content View -->
             <div id="admin-content-view" class="hidden flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
-                <!-- Navigation Tabs -->
                 <div class="flex border-b border-slate-200 text-sm font-semibold space-x-4">
                     <button onclick="switchAdminTab('products')" id="tab-products-btn" class="pb-2.5 border-b-2 border-slate-900 text-slate-900 flex items-center space-x-2">
                         <i class="fa-solid fa-boxes-stacked"></i>
@@ -338,7 +329,6 @@
                         </button>
                     </div>
 
-                    <!-- Products Table -->
                     <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-sm">
                         <table class="w-full text-left text-xs text-slate-600">
                             <thead class="bg-slate-50 text-slate-700 font-semibold uppercase border-b border-slate-200">
@@ -358,18 +348,16 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: PENGATURAN PROFIL & WA CATEGORY -->
+                <!-- TAB 2: PENGATURAN PROFIL -->
                 <div id="admin-tab-settings" class="hidden space-y-6">
-                    <!-- GAS Endpoint Config -->
                     <div class="bg-amber-50 p-4 border border-amber-200 rounded-xl space-y-2">
                         <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                             <i class="fa-solid fa-cloud"></i> Integrasi Google Sheets API (GAS)
                         </h4>
                         <p class="text-[11px] text-amber-800">Masukkan Web App URL dari Google Apps Script untuk menghubungkan katalog langsung ke Google Sheets.</p>
-                        <input type="url" id="setting-gas-url" placeholder="https://script.google.com/macros/s/AKfycbwBJPBbsvynSUB1X6br3lG5iqrfzxayDm8_mn6RNPSYAOKdR9VSDDSNUE3kQOZRt-EF7Q/exec" class="w-full px-3 py-2 text-xs border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+                        <input type="url" id="setting-gas-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2 text-xs border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none bg-white">
                     </div>
 
-                    <!-- Profile Form -->
                     <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
                         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Edit Profil Halaman Depan</h4>
                         <div>
@@ -386,11 +374,10 @@
                         </div>
                     </div>
 
-                    <!-- Category Admin Numbers -->
                     <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
                         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Pengaturan Nomor WA Admin per Kategori</h4>
                         <div id="category-wa-settings-container" class="space-y-3">
-                            <!-- Dynamic Inputs per Category -->
+                            <!-- Dynamic Inputs -->
                         </div>
                     </div>
 
@@ -402,7 +389,7 @@
         </div>
     </div>
 
-    <!-- 5. ADD/EDIT PRODUCT MODAL -->
+    <!-- 5. ADD/EDIT PRODUCT MODAL (UPLOAD FILE DARI HP/KOMPUTER) -->
     <div id="product-form-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl p-6 my-auto">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200">
@@ -414,10 +401,32 @@
 
             <form id="product-form" onsubmit="saveProduct(event)" class="mt-4 space-y-4">
                 <input type="hidden" id="form-product-id">
+                <input type="hidden" id="form-image-base64">
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Produk</label>
                     <input type="text" id="form-title" required placeholder="Contoh: Baju Kemeja Casual" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <!-- Input Upload Gambar dari HP/PC -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Gambar Produk (Upload dari HP / Komputer)</label>
+                    <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-50 transition cursor-pointer relative" onclick="document.getElementById('file-input').click()">
+                        <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        
+                        <div id="upload-placeholder" class="space-y-1">
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl text-slate-400"></i>
+                            <p class="text-xs font-semibold text-slate-700">Pilih Foto dari Galeri / File Komputer</p>
+                            <p class="text-[10px] text-slate-400">Otomatis dikompres & disimpan ke Google Sheets</p>
+                        </div>
+
+                        <div id="upload-preview-container" class="hidden flex flex-col items-center space-y-2">
+                            <img id="upload-preview-img" src="" class="w-24 h-24 object-cover rounded-lg shadow border">
+                            <button type="button" onclick="event.stopPropagation(); removeSelectedImage();" class="text-[10px] text-red-600 font-bold hover:underline">
+                                <i class="fa-solid fa-trash"></i> Hapus & Ganti Gambar
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
@@ -431,20 +440,14 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">URL Gambar Produk</label>
-                        <input type="url" id="form-image" required placeholder="https://..." class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Harga Asli (Rp)</label>
                         <input type="number" id="form-price" required min="0" placeholder="250000" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Diskon (%)</label>
-                        <input type="number" id="form-discount" required min="0" max="100" placeholder="15" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
-                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Diskon (%)</label>
+                    <input type="number" id="form-discount" required min="0" max="100" placeholder="15" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
                 </div>
 
                 <div>
@@ -464,7 +467,7 @@
         </div>
     </div>
 
-    <!-- Custom Confirmation Modal -->
+    <!-- Confirmation Modal -->
     <div id="confirm-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-5 text-center space-y-4 shadow-xl">
             <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl">
@@ -480,86 +483,11 @@
     </div>
 
     <script>
-        // Default Mock Data
-        const defaultProducts = [
-            {
-                id: "1",
-                title: "Kemeja Minimalis Unisex Flannel",
-                category: "FASHION",
-                price: 299000,
-                discount: 20,
-                image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80",
-                description: "Kemeja berbahan katun impor berkualitas, nyaman dipakai seharian, tahan kusut dan cocok untuk santai maupun kerja."
-            },
-            {
-                id: "2",
-                title: "Sepatu Sneaker Classic White",
-                category: "FASHION",
-                price: 450000,
-                discount: 15,
-                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
-                description: "Sepatu kasual dengan bantalan empuk dan desain sporty timeless."
-            },
-            {
-                id: "3",
-                title: "Headphone Bluetooth Noise Cancelling",
-                category: "ELEKTRONIK",
-                price: 850000,
-                discount: 25,
-                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
-                description: "Suara audio bass jernih dengan fitur penahan kebisingan sekitar. Baterai tahan hingga 30 jam."
-            },
-            {
-                id: "4",
-                title: "Kamera Vlogging Compact 4K",
-                category: "ELEKTRONIK",
-                price: 6500000,
-                discount: 10,
-                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&q=80",
-                description: "Kamera vlogging ringkas dengan perekaman 4K dan autofocus tajam."
-            },
-            {
-                id: "5",
-                title: "Helm Full Face Aerodynamic",
-                category: "OTOMOTIF",
-                price: 750000,
-                discount: 10,
-                image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80",
-                description: "Helm standar SNI & DOT dengan visor anti-scratch serta sistem ventilasi udara ganda."
-            },
-            {
-                id: "6",
-                title: "Oli Mesin Sintetis Premium 1L",
-                category: "OTOMOTIF",
-                price: 135000,
-                discount: 5,
-                image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=600&q=80",
-                description: "Perlindungan maksimal untuk mesin kendaraan modern, menjaga suhu tetap stabil."
-            },
-            {
-                id: "7",
-                title: "Jam Tangan Minimalist Chronograph",
-                category: "AKSESORIES",
-                price: 420000,
-                discount: 30,
-                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
-                description: "Jam tangan pria/wanita dengan tali kulit sintetis grade A dan water resistant."
-            },
-            {
-                id: "8",
-                title: "Kacamata Hitam Polarized Anti UV",
-                category: "AKSESORIES",
-                price: 180000,
-                discount: 15,
-                image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80",
-                description: "Kacamata stylish dengan perlindungan sinar UV400 untuk aktivitas luar ruangan."
-            }
-        ];
-
+        const defaultProducts = [];
         const defaultCompanyProfile = {
             name: "PT MITRA SEJAHTERA UTAMA",
             logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80",
-            about: "Kami adalah perusahaan penyedia produk terpercaya yang berkomitmen menghadirkan produk-produk berkualitas tinggi mulai dari Fashion, Elektronik, Otomotif, hingga Aksesories gaya hidup terbaik."
+            about: "Kami adalah perusahaan penyedia produk terpercaya yang berkomitmen menghadirkan produk-produk berkualitas tinggi dari berbagai kategori."
         };
 
         const defaultCategoryAdmins = {
@@ -569,14 +497,6 @@
             "AKSESORIES": "6281234567804"
         };
 
-        const categoryIcons = {
-            "FASHION": "fa-shirt",
-            "ELEKTRONIK": "fa-laptop",
-            "OTOMOTIF": "fa-car",
-            "AKSESORIES": "fa-gem"
-        };
-
-        // Global State
         let products = [];
         let companyProfile = {};
         let categoryAdmins = {};
@@ -584,18 +504,14 @@
         let activeProduct = null;
         let isAdminLoggedIn = false;
         let pendingDeleteId = null;
-        let gasApiUrl = ""; // Web App URL Google Apps Script
+        let gasApiUrl = "";
 
-        // Number Formatter (IDR)
         const formatIDR = (num) => {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         };
 
-        // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             loadData();
-            
-            // Set years in footer
             document.getElementById('current-year').innerText = new Date().getFullYear();
             document.getElementById('footer-year').innerText = new Date().getFullYear();
         });
@@ -646,9 +562,7 @@
             localStorage.setItem('katalog_admins_v2', JSON.stringify(categoryAdmins));
         }
 
-        // Render Landing Page Front
         function renderLandingPage() {
-            // Update company info
             document.getElementById('display-company-name').innerText = companyProfile.name || "NAMA PERUSAHAAN";
             document.getElementById('footer-company-name').innerText = companyProfile.name || "Nama Perusahaan";
             document.getElementById('display-about-text').innerText = companyProfile.about || "";
@@ -659,7 +573,6 @@
                 logoImg.onerror = function() { this.src = 'https://placehold.co/300x300/1e293b/ffffff?text=Logo'; };
             }
 
-            // Render category cards
             const categoryContainer = document.getElementById('landing-category-buttons');
             const categories = [
                 { id: "FASHION", name: "FASHION", icon: "fa-shirt", desc: "Pakaian, sepatu, & aksesoris busana" },
@@ -817,10 +730,67 @@
             document.getElementById('admin-modal').classList.add('hidden');
         }
 
+        // FUNGSI UPLOAD & KOMPRESI GAMBAR BASE64
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            showToast("Mengecilkan & memproses gambar...", "info");
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    // Kompresi presisi untuk Google Sheets (Max 400px, JPEG Quality 0.55)
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 400;
+
+                    if (width > height) {
+                        if (width > maxDim) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        }
+                    } else {
+                        if (height > maxDim) {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.55);
+                    document.getElementById('form-image-base64').value = base64Data;
+                    
+                    document.getElementById('upload-preview-img').src = base64Data;
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    document.getElementById('upload-preview-container').classList.remove('hidden');
+                    showToast("Gambar berhasil diproses!", "success");
+                };
+                img.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function removeSelectedImage() {
+            document.getElementById('file-input').value = "";
+            document.getElementById('form-image-base64').value = "";
+            document.getElementById('upload-preview-img').src = "";
+            document.getElementById('upload-preview-container').classList.add('hidden');
+            document.getElementById('upload-placeholder').classList.remove('hidden');
+        }
+
         function openProductFormModal() {
             document.getElementById('product-form-title').innerText = "Tambah Produk Baru";
             document.getElementById('product-form').reset();
             document.getElementById('form-product-id').value = "";
+            removeSelectedImage();
             document.getElementById('product-form-modal').classList.remove('hidden');
         }
 
@@ -836,10 +806,18 @@
             document.getElementById('form-product-id').value = p.id;
             document.getElementById('form-title').value = p.title;
             document.getElementById('form-category').value = p.category;
-            document.getElementById('form-image').value = p.image;
             document.getElementById('form-price').value = p.price;
             document.getElementById('form-discount').value = p.discount;
             document.getElementById('form-desc').value = p.description;
+
+            if (p.image) {
+                document.getElementById('form-image-base64').value = p.image;
+                document.getElementById('upload-preview-img').src = p.image;
+                document.getElementById('upload-placeholder').classList.add('hidden');
+                document.getElementById('upload-preview-container').classList.remove('hidden');
+            } else {
+                removeSelectedImage();
+            }
 
             document.getElementById('product-form-modal').classList.remove('hidden');
         }
@@ -878,7 +856,6 @@
                 }
             }
 
-            // Fallback PIN check
             if (pin === (companyProfile.pin || "1234")) { 
                 isAdminLoggedIn = true;
                 document.getElementById('admin-login-view').classList.add('hidden');
@@ -914,7 +891,6 @@
         }
 
         function renderAdminTables() {
-            // Render Products Table
             const prodTable = document.getElementById('admin-products-table');
             prodTable.innerHTML = products.map(p => {
                 const finalPrice = p.price - (p.price * (p.discount / 100));
@@ -940,7 +916,6 @@
                 `;
             }).join('');
 
-            // Render Settings Tab Inputs
             document.getElementById('setting-gas-url').value = localStorage.getItem('katalog_gas_url') || "";
             document.getElementById('setting-company-name').value = companyProfile.name || "";
             document.getElementById('setting-company-logo').value = companyProfile.logo || "";
@@ -1004,10 +979,15 @@
             const id = document.getElementById('form-product-id').value || Date.now().toString();
             const title = document.getElementById('form-title').value.trim();
             const category = document.getElementById('form-category').value;
-            const image = document.getElementById('form-image').value.trim();
+            const image = document.getElementById('form-image-base64').value;
             const price = parseFloat(document.getElementById('form-price').value);
             const discount = parseFloat(document.getElementById('form-discount').value) || 0;
             const description = document.getElementById('form-desc').value.trim();
+
+            if (!image) {
+                showToast("Silakan pilih gambar dari HP/Komputer terlebih dahulu!", "error");
+                return;
+            }
 
             const productData = { id, title, category, image, price, discount, description };
 
@@ -1073,7 +1053,6 @@
             }
         }
 
-        // Custom Toast Notification
         function showToast(message, type = "info") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
