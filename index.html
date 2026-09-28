@@ -737,13 +737,29 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
         }
 
-        function openAdminModal() {
-            document.getElementById('admin-modal').classList.remove('hidden');
-        }
+       // Buka Modal Admin
+function openAdminModal() {
+    // Pastikan selalu menampilkan layar login PIN saat pertama kali dibuka
+    document.getElementById('admin-login-view').classList.remove('hidden');
+    document.getElementById('admin-content-view').classList.add('hidden');
+    document.getElementById('admin-pin').value = ""; // Bersihkan input PIN
+    
+    document.getElementById('admin-modal').classList.remove('hidden');
+}
 
-        function closeAdminModal() {
-            document.getElementById('admin-modal').classList.add('hidden');
-        }
+// Tutup Modal Admin
+function closeAdminModal() {
+    // Reset status login admin menjadi false
+    isAdminLoggedIn = false;
+    
+    // Sembunyikan modal
+    document.getElementById('admin-modal').classList.add('hidden');
+    
+    // Reset tampilan ke form login PIN
+    document.getElementById('admin-login-view').classList.remove('hidden');
+    document.getElementById('admin-content-view').classList.add('hidden');
+    document.getElementById('admin-pin').value = ""; // Bersihkan input PIN
+}
 
         function handleImageUpload(e) {
             const file = e.target.files[0];
