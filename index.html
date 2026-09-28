@@ -49,14 +49,12 @@
 </head>
 <body class="h-full text-gray-800 antialiased font-sans bg-slate-50 flex flex-col min-h-screen relative">
 
-    <!-- ========================================== -->
-    <!-- 1. HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
-    <!-- ========================================== -->
-    <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
+    <!-- GLOBAL TOAST CONTAINER (UNTUK HALAMAN UTAMA) -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[99999] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
-        <!-- Header / Banner Perusahaan Full Width -->
+    <!-- HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
+    <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
         <header class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white relative shadow-lg">
-            <!-- Top Navbar Bar -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-slate-800/80">
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-store text-brand-400 text-sm"></i>
@@ -70,11 +68,8 @@
                 </button>
             </div>
 
-            <!-- Hero Store Banner & Profile Info -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-                    
-                    <!-- Logo Perusahaan -->
                     <div class="relative shrink-0">
                         <div id="logo-container" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white/20 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden">
                             <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
@@ -84,7 +79,6 @@
                         </div>
                     </div>
 
-                    <!-- Detail Profil Perusahaan -->
                     <div class="text-center md:text-left flex-1">
                         <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/30 text-brand-400 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider mb-2">
                             <span>Katalog Resmi Perusahaan</span>
@@ -93,7 +87,7 @@
                             NAMA PERUSAHAAN
                         </h1>
                         <p id="display-about-text" class="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-3xl leading-relaxed font-normal">
-                            Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi mulai dari fashion trendi, perangkat elektronik modern, suku cadang otomotif terpercaya, hingga aksesoris gaya hidup terbaik.
+                            Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi dari berbagai kategori.
                         </p>
                         
                         <div class="mt-5 flex flex-wrap justify-center md:justify-start gap-3 text-xs text-slate-300">
@@ -105,12 +99,10 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </header>
 
-        <!-- Main Content: Pilih Kategori Full Grid -->
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
             <div class="flex items-center justify-between mb-6">
                 <div>
@@ -120,13 +112,11 @@
                 <span class="hidden sm:block text-xs text-slate-400 font-medium">Klik kategori untuk melihat produk</span>
             </div>
 
-            <!-- Grid Kategori Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" id="landing-category-buttons">
                 <!-- Dynamic Category Cards -->
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
             <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
                 &copy; <span id="current-year">2026</span> <span id="footer-company-name">Nama Perusahaan</span>. All rights reserved.
@@ -134,23 +124,16 @@
         </footer>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 2. HALAMAN KATALOG PRODUK -->
-    <!-- ========================================== -->
+    <!-- HALAMAN KATALOG PRODUK -->
     <div id="catalog-screen" class="hidden flex-1 flex-col">
-        
-        <!-- MAIN NAVBAR -->
         <header class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16 gap-3">
-                    
-                    <!-- Kembali ke Halaman Utama -->
                     <button onclick="goToLandingPage()" class="inline-flex items-center space-x-2 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
                         <i class="fa-solid fa-arrow-left"></i>
                         <span>Pilih Kategori Lain</span>
                     </button>
 
-                    <!-- Search Input -->
                     <div class="flex-1 max-w-sm">
                         <div class="relative w-full">
                             <input type="text" id="search-input" onkeyup="renderProducts()" placeholder="Cari dalam kategori ini..." class="w-full pl-9 pr-4 py-2 text-xs bg-slate-100 border border-transparent rounded-xl focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition">
@@ -160,7 +143,6 @@
                         </div>
                     </div>
 
-                    <!-- Admin Button -->
                     <button onclick="openAdminModal()" class="inline-flex items-center justify-center py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition">
                         <i class="fa-solid fa-user-gear"></i>
                     </button>
@@ -168,9 +150,7 @@
             </div>
         </header>
 
-        <!-- MAIN CATALOG CONTENT -->
         <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            
             <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-6 mb-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <span class="text-[10px] font-bold text-brand-400 uppercase tracking-widest block mb-1">KATALOG PRODUK</span>
@@ -193,12 +173,10 @@
                 </div>
             </div>
 
-            <!-- Product Grid -->
             <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 <!-- Dynamic Product Cards -->
             </div>
 
-            <!-- Empty State -->
             <div id="empty-state" class="hidden flex-col items-center justify-center py-16 text-center">
                 <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 mb-4 text-3xl">
                     <i class="fa-solid fa-box-open"></i>
@@ -211,7 +189,6 @@
             </div>
         </main>
 
-        <!-- FOOTER -->
         <footer class="bg-white border-t border-slate-200 mt-12 py-6">
             <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
                 <p>&copy; <span id="footer-year">2026</span> Katalog Digital. Semua sistem katalog terintegrasi Admin WhatsApp.</p>
@@ -219,9 +196,7 @@
         </footer>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 3. PRODUCT DETAIL MODAL -->
-    <!-- ========================================== -->
+    <!-- PRODUCT DETAIL MODAL -->
     <div id="product-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transition-all transform my-auto">
             <div class="relative flex flex-col md:flex-row">
@@ -267,12 +242,13 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 4. ADMIN PANEL MODAL -->
-    <!-- ========================================== -->
+    <!-- ADMIN PANEL MODAL -->
     <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col my-auto max-h-[90vh]">
-            
+        
+        <!-- TOAST KHUSUS DIDALAM ADMIN MODAL (AGAR TAMPIL DEPAN) -->
+        <div id="admin-toast-container" class="absolute top-4 right-4 z-[999] flex flex-col gap-2 max-w-xs w-full pointer-events-none"></div>
+
+        <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col my-auto max-h-[90vh] relative">
             <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-xl bg-brand-500 text-slate-900 flex items-center justify-center font-bold">
@@ -288,7 +264,6 @@
                 </button>
             </div>
 
-            <!-- Login View -->
             <div id="admin-login-view" class="p-8 max-w-sm mx-auto w-full text-center space-y-4">
                 <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-700 mx-auto text-xl">
                     <i class="fa-solid fa-lock"></i>
@@ -303,7 +278,6 @@
                 </button>
             </div>
 
-            <!-- Admin Content View -->
             <div id="admin-content-view" class="hidden flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
                 <div class="flex border-b border-slate-200 text-sm font-semibold space-x-4">
                     <button onclick="switchAdminTab('products')" id="tab-products-btn" class="pb-2.5 border-b-2 border-slate-900 text-slate-900 flex items-center space-x-2">
@@ -316,7 +290,6 @@
                     </button>
                 </div>
 
-                <!-- TAB 1: KELOLA PRODUK -->
                 <div id="admin-tab-products" class="space-y-6">
                     <div class="flex justify-between items-center">
                         <h4 class="text-sm font-bold text-slate-800">Daftar Produk Katalog</h4>
@@ -345,7 +318,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: PENGATURAN PROFIL -->
                 <div id="admin-tab-settings" class="hidden space-y-6">
                     <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
                         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Edit Profil Halaman Depan</h4>
@@ -378,7 +350,7 @@
         </div>
     </div>
 
-    <!-- 5. ADD/EDIT PRODUCT MODAL -->
+    <!-- ADD/EDIT PRODUCT MODAL -->
     <div id="product-form-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl p-6 my-auto">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200">
@@ -455,7 +427,7 @@
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
+    <!-- CONFIRMATION MODAL -->
     <div id="confirm-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-5 text-center space-y-4 shadow-xl">
             <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl">
@@ -470,13 +442,8 @@
         </div>
     </div>
 
-    <!-- CUSTOM TOAST CONTAINER (Ditempatkan di Paling Bawah Dokumen dengan Style z-index Maksimal) -->
-    <div id="toast-container" class="fixed top-5 right-5 flex flex-col gap-2 max-w-sm w-full pointer-events-none" style="z-index: 999999 !important;"></div>
-
     <script>
-        // =========================================================================
-        // TEMPATKAN URL GOOGLE APPS SCRIPT (GAS) ANDA DI SINI
-        // =========================================================================
+        // URL GOOGLE APPS SCRIPT (GAS)
         const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbwBJPBbsvynSUB1X6br3lG5iqrfzxayDm8_mn6RNPSYAOKdR9VSDDSNUE3kQOZRt-EF7Q/exec";
 
         const defaultCompanyProfile = {
@@ -761,7 +728,7 @@
                     document.getElementById('upload-preview-img').src = base64Data;
                     document.getElementById('upload-placeholder').classList.add('hidden');
                     document.getElementById('upload-preview-container').classList.remove('hidden');
-                    showToast("Gambar berhasil diproses!", "success");
+                    showToast("Gambar berhasil dipproses!", "success");
                 };
                 img.src = event.target.result;
             };
@@ -1039,10 +1006,19 @@
             }
         }
 
+        // FUNGSI TOAST CERDAS (OTOMATIS MEMILIH KONTANER DIDALAM MODAL ATAU OUTSIDE)
         function showToast(message, type = "info") {
-            const container = document.getElementById('toast-container');
+            const adminModal = document.getElementById('admin-modal');
+            const isAdminOpen = adminModal && !adminModal.classList.contains('hidden');
+
+            // Pilih container berdasarkan status modal
+            const container = isAdminOpen 
+                ? document.getElementById('admin-toast-container') 
+                : document.getElementById('toast-container');
+
+            if (!container) return;
+
             const toast = document.createElement('div');
-            
             let bgClass = "bg-slate-900 text-white";
             let iconClass = "fa-circle-info text-blue-400";
 
