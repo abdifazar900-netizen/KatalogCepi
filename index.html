@@ -49,7 +49,7 @@
 </head>
 <body class="h-full text-gray-800 antialiased font-sans bg-slate-50 flex flex-col min-h-screen relative">
 
-    <!-- OVERLAY LOADING GLOBAL (ANTI DOUBLE CLICK) -->
+    <!-- OVERLAY LOADING GLOBAL -->
     <div id="loading-overlay" class="fixed inset-0 z-[999999] hidden bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-4">
         <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-2xl flex flex-col items-center space-y-3 border border-slate-700 max-w-xs w-full text-center">
             <div class="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
@@ -57,66 +57,62 @@
         </div>
     </div>
 
-    <!-- GLOBAL TOAST CONTAINER (TENGAH ATAS & LEBIH BESAR) -->
+    <!-- GLOBAL TOAST CONTAINER -->
     <div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999999] flex flex-col gap-2 max-w-md w-11/12 pointer-events-none"></div>
 
-    <!-- HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
-   <header class="relative bg-slate-900 text-white overflow-hidden shadow-lg min-h-[280px] sm:min-h-[340px] flex flex-col justify-between">
-    <!-- GAMBAR SAMPUL (COVER PHOTO) -->
-    <img id="company-cover-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80" alt="Foto Sampul" class="absolute inset-0 w-full h-full object-cover z-0">
-    
-    <!-- OVERLAY GELAP (Agar teks & logo tetap kontras & terbaca) -->
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-slate-900/40 z-10"></div>
+    <!-- HALAMAN DEPAN (LANDING PAGE) -->
+    <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
+        <header class="relative bg-slate-900 text-white overflow-hidden shadow-lg min-h-[280px] sm:min-h-[340px] flex flex-col justify-between">
+            <img id="company-cover-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80" alt="Foto Sampul" class="absolute inset-0 w-full h-full object-cover z-0">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-slate-900/40 z-10"></div>
 
-    <!-- TOP BAR -->
-    <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-white/10 backdrop-blur-xs">
-        <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-store text-brand-400 text-sm"></i>
-            <span class="text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
-                Official Store Catalogue
-            </span>
-        </div>
-        <button onclick="openAdminModal()" class="inline-flex items-center space-x-2 bg-slate-900/60 hover:bg-slate-900/90 text-white border border-white/20 text-xs sm:text-sm px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
-            <i class="fa-solid fa-user-gear"></i>
-            <span>Admin Panel</span>
-        </button>
-    </div>
-
-    <!-- PROFIL HERO CONTENT -->
-    <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div class="flex flex-col md:flex-row items-center md:items-end gap-5 sm:gap-6">
-            <div class="relative shrink-0">
-                <div id="logo-container" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white/30 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden backdrop-blur-sm">
-                    <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
-                </div>
-                <div class="absolute bottom-1 right-1 bg-brand-500 text-white w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg text-xs sm:text-sm border-2 border-slate-900">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
-            </div>
-
-            <div class="text-center md:text-left flex-1">
-                <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/40 backdrop-blur-md text-brand-300 text-[11px] px-3 py-0.5 rounded-full font-semibold uppercase tracking-wider mb-2">
-                    <span>Katalog Resmi Perusahaan</span>
-                </div>
-                <h1 id="display-company-name" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
-                    NAMA PERUSAHAAN
-                </h1>
-                <p id="display-about-text" class="text-xs sm:text-sm text-slate-200 mt-2 max-w-3xl leading-relaxed font-normal drop-shadow">
-                    Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi dari berbagai kategori.
-                </p>
-                
-                <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-2.5 text-xs text-slate-200">
-                    <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
-                        <i class="fa-solid fa-shield-halved text-brand-400"></i> Katalog Terverifikasi
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
-                        <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pemesanan Langsung WA Admin
+            <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-white/10 backdrop-blur-xs">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-store text-brand-400 text-sm"></i>
+                    <span class="text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
+                        Official Store Catalogue
                     </span>
                 </div>
+                <button onclick="openAdminModal()" class="inline-flex items-center space-x-2 bg-slate-900/60 hover:bg-slate-900/90 text-white border border-white/20 text-xs sm:text-sm px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Admin Panel</span>
+                </button>
             </div>
-        </div>
-    </div>
-</header>
+
+            <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+                <div class="flex flex-col md:flex-row items-center md:items-end gap-5 sm:gap-6">
+                    <div class="relative shrink-0">
+                        <div id="logo-container" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white/30 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden backdrop-blur-sm">
+                            <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute bottom-1 right-1 bg-brand-500 text-white w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg text-xs sm:text-sm border-2 border-slate-900">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+
+                    <div class="text-center md:text-left flex-1">
+                        <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/40 backdrop-blur-md text-brand-300 text-[11px] px-3 py-0.5 rounded-full font-semibold uppercase tracking-wider mb-2">
+                            <span>Katalog Resmi Perusahaan</span>
+                        </div>
+                        <h1 id="display-company-name" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
+                            NAMA PERUSAHAAN
+                        </h1>
+                        <p id="display-about-text" class="text-xs sm:text-sm text-slate-200 mt-2 max-w-3xl leading-relaxed font-normal drop-shadow">
+                            Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi dari berbagai kategori.
+                        </p>
+                        
+                        <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-2.5 text-xs text-slate-200">
+                            <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
+                                <i class="fa-solid fa-shield-halved text-brand-400"></i> Katalog Terverifikasi
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pemesanan Langsung WA Admin
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
             <div class="flex items-center justify-between mb-6">
@@ -334,78 +330,79 @@
                     </div>
                 </div>
 
-              <!-- TAB 2: PROFIL PERUSAHAAN & WA -->
-<div id="admin-tab-settings" class="hidden space-y-6">
-    <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Edit Profil Halaman Depan</h4>
-        
-        <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Perusahaan</label>
-            <input type="text" id="setting-company-name" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
-        </div>
+                <!-- TAB 2: PROFIL PERUSAHAAN & WA -->
+                <div id="admin-tab-settings" class="hidden space-y-6">
+                    <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
+                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Edit Profil Halaman Depan</h4>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Perusahaan</label>
+                            <input type="text" id="setting-company-name" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
+                        </div>
 
-        <!-- UPLOAD LOGO PERUSAHAAN (DARI GALERI/FILE) -->
-        <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Logo Perusahaan (Upload Galeri / File)</label>
-            <input type="hidden" id="setting-company-logo-base64">
-            
-            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-100 transition cursor-pointer relative bg-white" onclick="document.getElementById('logo-file-input').click()">
-                <input type="file" id="logo-file-input" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
-                
-                <div id="logo-upload-placeholder" class="space-y-1">
-                    <i class="fa-solid fa-image text-2xl text-slate-400"></i>
-                    <p class="text-xs font-semibold text-slate-700">Pilih Logo dari Galeri / Komputer</p>
-                    <p class="text-[10px] text-slate-400">Otomatis dikompres & disimpan ke Google Sheets</p>
-                </div>
+                        <!-- UPLOAD LOGO -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Logo Perusahaan (Upload Galeri / File)</label>
+                            <input type="hidden" id="setting-company-logo-base64">
+                            
+                            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-100 transition cursor-pointer relative bg-white" onclick="document.getElementById('logo-file-input').click()">
+                                <input type="file" id="logo-file-input" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
+                                
+                                <div id="logo-upload-placeholder" class="space-y-1">
+                                    <i class="fa-solid fa-image text-2xl text-slate-400"></i>
+                                    <p class="text-xs font-semibold text-slate-700">Pilih Logo dari Galeri / Komputer</p>
+                                    <p class="text-[10px] text-slate-400">Otomatis dikompres & disimpan ke Google Sheets</p>
+                                </div>
 
-                <div id="logo-preview-container" class="hidden flex flex-col items-center space-y-2">
-                    <img id="logo-preview-img" src="" class="w-20 h-20 object-cover rounded-full shadow border border-slate-200">
-                    <button type="button" onclick="event.stopPropagation(); removeSelectedLogo();" class="text-[10px] text-red-600 font-bold hover:underline">
-                        <i class="fa-solid fa-trash"></i> Hapus & Ganti Logo
+                                <div id="logo-preview-container" class="hidden flex flex-col items-center space-y-2">
+                                    <img id="logo-preview-img" src="" class="w-20 h-20 object-cover rounded-full shadow border border-slate-200">
+                                    <button type="button" onclick="event.stopPropagation(); removeSelectedLogo();" class="text-[10px] text-red-600 font-bold hover:underline">
+                                        <i class="fa-solid fa-trash"></i> Hapus & Ganti Logo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPLOAD FOTO SAMPUL -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Sampul Header (Cover Photo)</label>
+                            <input type="hidden" id="setting-company-cover-base64">
+                            
+                            <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-100 transition cursor-pointer relative bg-white" onclick="document.getElementById('cover-file-input').click()">
+                                <input type="file" id="cover-file-input" accept="image/*" class="hidden" onchange="handleCoverUpload(event)">
+                                
+                                <div id="cover-upload-placeholder" class="space-y-1">
+                                    <i class="fa-solid fa-panorama text-2xl text-slate-400"></i>
+                                    <p class="text-xs font-semibold text-slate-700">Pilih Foto Sampul dari Galeri / Komputer</p>
+                                    <p class="text-[10px] text-slate-400">Rekomendasi rasio melebar (Landscape). Otomatis dikompres Base64.</p>
+                                </div>
+
+                                <div id="cover-preview-container" class="hidden flex flex-col items-center space-y-2">
+                                    <img id="cover-preview-img" src="" class="w-full h-24 object-cover rounded-lg shadow border border-slate-200">
+                                    <button type="button" onclick="event.stopPropagation(); removeSelectedCover();" class="text-[10px] text-red-600 font-bold hover:underline">
+                                        <i class="fa-solid fa-trash"></i> Hapus & Ganti Sampul
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi "Tentang Kami"</label>
+                            <textarea id="setting-about-text" rows="3" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
+                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Pengaturan Nomor WA Admin per Kategori</h4>
+                        <div id="category-wa-settings-container" class="space-y-3">
+                            <!-- Dynamic Inputs -->
+                        </div>
+                    </div>
+
+                    <button onclick="saveCompanySettings()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs transition">
+                        Simpan Semua Pengaturan
                     </button>
                 </div>
-            </div>
-        </div>
-        <!-- UPLOAD FOTO SAMPUL (COVER PHOTO) -->
-<div>
-    <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Sampul Header (Cover Photo)</label>
-    <input type="hidden" id="setting-company-cover-base64">
-    
-    <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-100 transition cursor-pointer relative bg-white" onclick="document.getElementById('cover-file-input').click()">
-        <input type="file" id="cover-file-input" accept="image/*" class="hidden" onchange="handleCoverUpload(event)">
-        
-        <div id="cover-upload-placeholder" class="space-y-1">
-            <i class="fa-solid fa-panorama text-2xl text-slate-400"></i>
-            <p class="text-xs font-semibold text-slate-700">Pilih Foto Sampul dari Galeri / Komputer</p>
-            <p class="text-[10px] text-slate-400">Rekomendasi rasio melebar (Landscape). Otomatis dikompres Base64.</p>
-        </div>
-
-        <div id="cover-preview-container" class="hidden flex flex-col items-center space-y-2">
-            <img id="cover-preview-img" src="" class="w-full h-24 object-cover rounded-lg shadow border border-slate-200">
-            <button type="button" onclick="event.stopPropagation(); removeSelectedCover();" class="text-[10px] text-red-600 font-bold hover:underline">
-                <i class="fa-solid fa-trash"></i> Hapus & Ganti Sampul
-            </button>
-        </div>
-    </div>
-</div>
-
-        <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi "Tentang Kami"</label>
-            <textarea id="setting-about-text" rows="3" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none resize-none"></textarea>
-        </div>
-    </div>
-
-    <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Pengaturan Nomor WA Admin per Kategori</h4>
-        <div id="category-wa-settings-container" class="space-y-3">
-            <!-- Dynamic Inputs -->
-        </div>
-    </div>
-
-    <button onclick="saveCompanySettings()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs transition">
-        Simpan Semua Pengaturan
-    </button>
-</div>
 
                 <!-- TAB 3: GANTI PIN ADMIN -->
                 <div id="admin-tab-pin" class="hidden space-y-6">
@@ -542,6 +539,7 @@
         const defaultCompanyProfile = {
             name: "PT MITRA SEJAHTERA UTAMA",
             logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80",
+            cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80",
             about: "Kami adalah perusahaan penyedia produk terpercaya yang berkomitmen menghadirkan produk-produk berkualitas tinggi dari berbagai kategori."
         };
 
@@ -578,6 +576,16 @@
             loadData();
             document.getElementById('current-year').innerText = new Date().getFullYear();
             document.getElementById('footer-year').innerText = new Date().getFullYear();
+        });
+
+        // HANDLE NAVIGASI TOMBOL KEMBALI HP
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.screen === 'catalog') {
+                selectedCategory = event.state.category;
+                showCatalogView();
+            } else {
+                showLandingView();
+            }
         });
 
         async function loadData() {
@@ -638,6 +646,16 @@
                 logoImg.onerror = function() { this.src = 'https://placehold.co/300x300/1e293b/ffffff?text=Logo'; };
             }
 
+            const coverImg = document.getElementById('company-cover-img');
+            if (coverImg) {
+                coverImg.src = companyProfile.cover || defaultCompanyProfile.cover;
+                coverImg.onerror = function() { this.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80'; };
+            }
+
+            renderCategoryButtons();
+        }
+
+        function renderCategoryButtons() {
             const categoryContainer = document.getElementById('landing-category-buttons');
             const categories = [
                 { id: "Cleaning Tools", name: "Cleaning Tools", icon: "fa-broom", desc: "Peralatan & perlengkapan kebersihan" },
@@ -666,6 +684,19 @@
 
         function selectCategory(category) {
             selectedCategory = category;
+            history.pushState({ screen: 'catalog', category: category }, "", "#katalog");
+            showCatalogView();
+        }
+
+        function goToLandingPage() {
+            if (window.location.hash === "#katalog") {
+                history.back();
+            } else {
+                showLandingView();
+            }
+        }
+
+        function showCatalogView() {
             document.getElementById('landing-screen').classList.add('hidden');
             document.getElementById('catalog-screen').classList.remove('hidden');
             document.getElementById('catalog-screen').classList.add('flex');
@@ -673,7 +704,7 @@
             renderProducts();
         }
 
-        function goToLandingPage() {
+        function showLandingView() {
             document.getElementById('catalog-screen').classList.add('hidden');
             document.getElementById('catalog-screen').classList.remove('flex');
             document.getElementById('landing-screen').classList.remove('hidden');
@@ -787,29 +818,20 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
         }
 
-       // Buka Modal Admin
-function openAdminModal() {
-    // Pastikan selalu menampilkan layar login PIN saat pertama kali dibuka
-    document.getElementById('admin-login-view').classList.remove('hidden');
-    document.getElementById('admin-content-view').classList.add('hidden');
-    document.getElementById('admin-pin').value = ""; // Bersihkan input PIN
-    
-    document.getElementById('admin-modal').classList.remove('hidden');
-}
+        function openAdminModal() {
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('admin-content-view').classList.add('hidden');
+            document.getElementById('admin-pin').value = "";
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
 
-// Tutup Modal Admin
-function closeAdminModal() {
-    // Reset status login admin menjadi false
-    isAdminLoggedIn = false;
-    
-    // Sembunyikan modal
-    document.getElementById('admin-modal').classList.add('hidden');
-    
-    // Reset tampilan ke form login PIN
-    document.getElementById('admin-login-view').classList.remove('hidden');
-    document.getElementById('admin-content-view').classList.add('hidden');
-    document.getElementById('admin-pin').value = ""; // Bersihkan input PIN
-}
+        function closeAdminModal() {
+            isAdminLoggedIn = false;
+            document.getElementById('admin-modal').classList.add('hidden');
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('admin-content-view').classList.add('hidden');
+            document.getElementById('admin-pin').value = "";
+        }
 
         function handleImageUpload(e) {
             const file = e.target.files[0];
@@ -913,120 +935,113 @@ function closeAdminModal() {
             document.getElementById('confirm-modal').classList.add('hidden');
         }
 
-        // VERIFIKASI PIN ADMIN (SUDAH DIPERBAIKI)
-async function verifyAdminPin() {
-    const pin = document.getElementById('admin-pin').value.trim();
-    if (!pin) {
-        showToast("Masukkan PIN terlebih dahulu!", "error");
-        return;
-    }
+        async function verifyAdminPin() {
+            const pin = document.getElementById('admin-pin').value.trim();
+            if (!pin) {
+                showToast("Masukkan PIN terlebih dahulu!", "error");
+                return;
+            }
 
-    showLoading("Memverifikasi PIN...");
-    
-    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-        try {
-            const res = await fetch(gasApiUrl, {
-                method: 'POST',
-                body: JSON.stringify({ action: "verifyPin", pin: pin })
-            });
-            const data = await res.json();
+            showLoading("Memverifikasi PIN...");
             
-            if (data.success) {
+            if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+                try {
+                    const res = await fetch(gasApiUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ action: "verifyPin", pin: pin })
+                    });
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        isAdminLoggedIn = true;
+                        localStorage.setItem('katalog_admin_pin', pin);
+                        
+                        document.getElementById('admin-login-view').classList.add('hidden');
+                        document.getElementById('admin-content-view').classList.remove('hidden');
+                        renderAdminTables();
+                        showToast("Berhasil masuk sebagai Admin!", "success");
+                        hideLoading();
+                        return;
+                    } else {
+                        showToast("PIN Admin Salah!", "error");
+                        hideLoading();
+                        return;
+                    }
+                } catch(e) {
+                    console.error("Gagal terhubung ke GAS:", e);
+                }
+            }
+
+            const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
+            if (pin === savedPin) { 
                 isAdminLoggedIn = true;
-                // Simpan PIN terbaru di localStorage sebagai fallback
-                localStorage.setItem('katalog_admin_pin', pin);
-                
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-content-view').classList.remove('hidden');
                 renderAdminTables();
                 showToast("Berhasil masuk sebagai Admin!", "success");
-                hideLoading();
-                return;
             } else {
                 showToast("PIN Admin Salah!", "error");
-                hideLoading();
-                return;
             }
-        } catch(e) {
-            console.error("Gagal terhubung ke GAS:", e);
-        }
-    }
-
-    // FALLBACK LOKAL: Gunakan PIN yang tersimpan di localStorage (default: 1234 jika belum pernah diubah)
-    const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
-    if (pin === savedPin) { 
-        isAdminLoggedIn = true;
-        document.getElementById('admin-login-view').classList.add('hidden');
-        document.getElementById('admin-content-view').classList.remove('hidden');
-        renderAdminTables();
-        showToast("Berhasil masuk sebagai Admin!", "success");
-    } else {
-        showToast("PIN Admin Salah!", "error");
-    }
-    hideLoading();
-}
-
-// PROSES GANTI PIN ADMIN (SUDAH DIPERBAIKI)
-async function changeAdminPin() {
-    const oldPin = document.getElementById('pin-old').value.trim();
-    const newPin = document.getElementById('pin-new').value.trim();
-    const confirmPin = document.getElementById('pin-confirm').value.trim();
-
-    if (!oldPin || !newPin || !confirmPin) {
-        showToast("Semua kolom PIN harus diisi!", "error");
-        return;
-    }
-
-    if (newPin !== confirmPin) {
-        showToast("Konfirmasi PIN baru tidak cocok!", "error");
-        return;
-    }
-
-    showLoading("Memperbarui PIN Admin...");
-
-    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-        try {
-            const res = await fetch(gasApiUrl, {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: "changePin",
-                    oldPin: oldPin,
-                    newPin: newPin
-                })
-            });
-            const data = await res.json();
-            if (data.success) {
-                // Perbarui juga PIN di penyimpanan lokal browser
-                localStorage.setItem('katalog_admin_pin', newPin);
-                
-                showToast(data.message || "PIN berhasil diperbarui!", "success");
-                document.getElementById('pin-old').value = "";
-                document.getElementById('pin-new').value = "";
-                document.getElementById('pin-confirm').value = "";
-            } else {
-                showToast(data.message || "Gagal memperbarui PIN! PIN lama salah.", "error");
-            }
-        } catch(e) {
-            console.error(e);
-            showToast("Gagal terhubung ke server!", "error");
-        } finally {
             hideLoading();
         }
-    } else {
-        // Jika mode lokal tanpa GAS
-        const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
-        if (oldPin === savedPin) {
-            localStorage.setItem('katalog_admin_pin', newPin);
-            showToast("PIN berhasil diperbarui secara lokal!", "success");
-            document.getElementById('pin-old').value = "";
-            document.getElementById('pin-new').value = "";
-            document.getElementById('pin-confirm').value = "";
-        } else {
-            showToast("PIN Lama salah!", "error");
+
+        async function changeAdminPin() {
+            const oldPin = document.getElementById('pin-old').value.trim();
+            const newPin = document.getElementById('pin-new').value.trim();
+            const confirmPin = document.getElementById('pin-confirm').value.trim();
+
+            if (!oldPin || !newPin || !confirmPin) {
+                showToast("Semua kolom PIN harus diisi!", "error");
+                return;
+            }
+
+            if (newPin !== confirmPin) {
+                showToast("Konfirmasi PIN baru tidak cocok!", "error");
+                return;
+            }
+
+            showLoading("Memperbarui PIN Admin...");
+
+            if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+                try {
+                    const res = await fetch(gasApiUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: "changePin",
+                            oldPin: oldPin,
+                            newPin: newPin
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        localStorage.setItem('katalog_admin_pin', newPin);
+                        showToast(data.message || "PIN berhasil diperbarui!", "success");
+                        document.getElementById('pin-old').value = "";
+                        document.getElementById('pin-new').value = "";
+                        document.getElementById('pin-confirm').value = "";
+                    } else {
+                        showToast(data.message || "Gagal memperbarui PIN!", "error");
+                    }
+                } catch(e) {
+                    console.error(e);
+                    showToast("Gagal terhubung ke server!", "error");
+                } finally {
+                    hideLoading();
+                }
+            } else {
+                const savedPin = localStorage.getItem('katalog_admin_pin') || "1234";
+                if (oldPin === savedPin) {
+                    localStorage.setItem('katalog_admin_pin', newPin);
+                    showToast("PIN berhasil diperbarui secara lokal!", "success");
+                    document.getElementById('pin-old').value = "";
+                    document.getElementById('pin-new').value = "";
+                    document.getElementById('pin-confirm').value = "";
+                } else {
+                    showToast("PIN Lama salah!", "error");
+                }
+                hideLoading();
+            }
         }
-        hideLoading();
-    }
-}
 
         function switchAdminTab(tab) {
             const tabProducts = document.getElementById('admin-tab-products');
@@ -1060,102 +1075,179 @@ async function changeAdminPin() {
             }
         }
 
-        async function changeAdminPin() {
-            const oldPin = document.getElementById('pin-old').value.trim();
-            const newPin = document.getElementById('pin-new').value.trim();
-            const confirmPin = document.getElementById('pin-confirm').value.trim();
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-            if (!oldPin || !newPin || !confirmPin) {
-                showToast("Semua kolom PIN harus diisi!", "error");
-                return;
-            }
+            showLoading("Memproses & mengecilkan gambar logo...");
+            const reader = new FileReader();
 
-            if (newPin !== confirmPin) {
-                showToast("Konfirmasi PIN baru tidak cocok!", "error");
-                return;
-            }
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 350;
 
-            showLoading("Memperbarui PIN Admin...");
-
-            if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-                try {
-                    const res = await fetch(gasApiUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            action: "changePin",
-                            oldPin: oldPin,
-                            newPin: newPin
-                        })
-                    });
-                    const data = await res.json();
-                    if (data.success) {
-                        showToast(data.message || "PIN berhasil diperbarui!", "success");
-                        document.getElementById('pin-old').value = "";
-                        document.getElementById('pin-new').value = "";
-                        document.getElementById('pin-confirm').value = "";
+                    if (width > height) {
+                        if (width > maxDim) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        }
                     } else {
-                        showToast(data.message || "Gagal memperbarui PIN!", "error");
+                        if (height > maxDim) {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
                     }
-                } catch(e) {
-                    console.error(e);
-                    showToast("Gagal terhubung ke server!", "error");
-                } finally {
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.6);
+                    document.getElementById('setting-company-logo-base64').value = base64Data;
+                    
+                    document.getElementById('logo-preview-img').src = base64Data;
+                    document.getElementById('logo-upload-placeholder').classList.add('hidden');
+                    document.getElementById('logo-preview-container').classList.remove('hidden');
                     hideLoading();
-                }
-            } else {
-                hideLoading();
-                showToast("Model demo lokal: Silakan jalankan di Google Sheets!", "info");
-            }
+                    showToast("Logo berhasil dikompres!", "success");
+                };
+                img.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function removeSelectedLogo() {
+            document.getElementById('logo-file-input').value = "";
+            document.getElementById('setting-company-logo-base64').value = "";
+            document.getElementById('logo-preview-img').src = "";
+            document.getElementById('logo-preview-container').classList.add('hidden');
+            document.getElementById('logo-upload-placeholder').classList.remove('hidden');
+        }
+
+        function handleCoverUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            showLoading("Memproses & mengecilkan foto sampul...");
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 800;
+
+                    if (width > maxDim) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.6);
+                    document.getElementById('setting-company-cover-base64').value = base64Data;
+                    
+                    document.getElementById('cover-preview-img').src = base64Data;
+                    document.getElementById('cover-upload-placeholder').classList.add('hidden');
+                    document.getElementById('cover-preview-container').classList.remove('hidden');
+                    hideLoading();
+                    showToast("Foto sampul berhasil dikompres!", "success");
+                };
+                img.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function removeSelectedCover() {
+            document.getElementById('cover-file-input').value = "";
+            document.getElementById('setting-company-cover-base64').value = "";
+            document.getElementById('cover-preview-img').src = "";
+            document.getElementById('cover-preview-container').classList.add('hidden');
+            document.getElementById('cover-upload-placeholder').classList.remove('hidden');
         }
 
         function renderAdminTables() {
             const prodTable = document.getElementById('admin-products-table');
-            prodTable.innerHTML = products.map(p => {
-                const finalPrice = p.price - (p.price * (p.discount / 100));
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 flex items-center space-x-2">
-                            <img src="${p.image}" class="w-8 h-8 rounded object-cover border" onerror="this.src='https://placehold.co/100x100'">
-                            <span class="font-semibold text-slate-800 line-clamp-1">${p.title}</span>
-                        </td>
-                        <td class="p-3"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">${p.category}</span></td>
-                        <td class="p-3">${formatIDR(p.price)}</td>
-                        <td class="p-3 font-bold text-red-500">${p.discount}%</td>
-                        <td class="p-3 font-bold text-brand-600">${formatIDR(finalPrice)}</td>
-                        <td class="p-3 text-right space-x-1">
-                            <button onclick="editProduct('${p.id}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button onclick="confirmDeleteProduct('${p.id}')" class="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition" title="Hapus">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+            if (prodTable) {
+                prodTable.innerHTML = products.map(p => {
+                    const finalPrice = p.price - (p.price * (p.discount / 100));
+                    return `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 flex items-center space-x-2">
+                                <img src="${p.image}" class="w-8 h-8 rounded object-cover border" onerror="this.src='https://placehold.co/100x100'">
+                                <span class="font-semibold text-slate-800 line-clamp-1">${p.title}</span>
+                            </td>
+                            <td class="p-3"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">${p.category}</span></td>
+                            <td class="p-3">${formatIDR(p.price)}</td>
+                            <td class="p-3 font-bold text-red-500">${p.discount}%</td>
+                            <td class="p-3 font-bold text-brand-600">${formatIDR(finalPrice)}</td>
+                            <td class="p-3 text-right space-x-1">
+                                <button onclick="editProduct('${p.id}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition" title="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="confirmDeleteProduct('${p.id}')" class="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition" title="Hapus">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
 
             document.getElementById('setting-company-name').value = companyProfile.name || "";
-            document.getElementById('setting-company-logo').value = companyProfile.logo || "";
             document.getElementById('setting-about-text').value = companyProfile.about || "";
+
+            if (companyProfile.logo) {
+                document.getElementById('setting-company-logo-base64').value = companyProfile.logo;
+                document.getElementById('logo-preview-img').src = companyProfile.logo;
+                document.getElementById('logo-upload-placeholder').classList.add('hidden');
+                document.getElementById('logo-preview-container').classList.remove('hidden');
+            } else {
+                removeSelectedLogo();
+            }
+
+            if (companyProfile.cover) {
+                document.getElementById('setting-company-cover-base64').value = companyProfile.cover;
+                document.getElementById('cover-preview-img').src = companyProfile.cover;
+                document.getElementById('cover-upload-placeholder').classList.add('hidden');
+                document.getElementById('cover-preview-container').classList.remove('hidden');
+            } else {
+                removeSelectedCover();
+            }
 
             const categoryWaContainer = document.getElementById('category-wa-settings-container');
             const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
 
-            categoryWaContainer.innerHTML = categories.map(cat => {
-                const currentPhone = categoryAdmins[cat] || "";
-                return `
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WA Admin Kategori ${cat}</label>
-                        <input type="text" id="wa-input-${cat}" value="${currentPhone}" placeholder="Contoh: 081234567890" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
-                    </div>
-                `;
-            }).join('');
+            if (categoryWaContainer) {
+                categoryWaContainer.innerHTML = categories.map(cat => {
+                    const currentPhone = categoryAdmins[cat] || "";
+                    return `
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WA Admin Kategori ${cat}</label>
+                            <input type="text" id="wa-input-${cat}" value="${currentPhone}" placeholder="Contoh: 081234567890" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
+                        </div>
+                    `;
+                }).join('');
+            }
         }
 
         async function saveCompanySettings() {
             showLoading("Menyimpan Pengaturan...");
             companyProfile.name = document.getElementById('setting-company-name').value.trim();
-            companyProfile.logo = document.getElementById('setting-company-logo').value.trim();
+            companyProfile.logo = document.getElementById('setting-company-logo-base64').value.trim();
+            companyProfile.cover = document.getElementById('setting-company-cover-base64').value.trim();
             companyProfile.about = document.getElementById('setting-about-text').value.trim();
 
             const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
@@ -1311,352 +1403,6 @@ async function changeAdminPin() {
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
-        // FUNGSI UPLOAD & KOMPRESI LOGO PERUSAHAAN
-function handleLogoUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    showLoading("Memproses & mengecilkan gambar logo...");
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            const maxDim = 350; // Dimensi logo max 350px
-
-            if (width > height) {
-                if (width > maxDim) {
-                    height = Math.round((height * maxDim) / width);
-                    width = maxDim;
-                }
-            } else {
-                if (height > maxDim) {
-                    width = Math.round((width * maxDim) / height);
-                    height = maxDim;
-                }
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            // Kompresi Base64 Kualitas 60%
-            const base64Data = canvas.toDataURL('image/jpeg', 0.6);
-            document.getElementById('setting-company-logo-base64').value = base64Data;
-            
-            document.getElementById('logo-preview-img').src = base64Data;
-            document.getElementById('logo-upload-placeholder').classList.add('hidden');
-            document.getElementById('logo-preview-container').classList.remove('hidden');
-            hideLoading();
-            showToast("Logo berhasil dikompres!", "success");
-        };
-        img.src = event.target.result;
-    };
-
-    reader.readAsDataURL(file);
-}
-
-function removeSelectedLogo() {
-    document.getElementById('logo-file-input').value = "";
-    document.getElementById('setting-company-logo-base64').value = "";
-    document.getElementById('logo-preview-img').src = "";
-    document.getElementById('logo-preview-container').classList.add('hidden');
-    document.getElementById('logo-upload-placeholder').classList.remove('hidden');
-}
-
-// PERBAIKAN RENDER TABLE ADMIN (UNTUK INPUT PROFIL)
-function renderAdminTables() {
-    // ... (kode tabel produk tetap sama) ...
-    const prodTable = document.getElementById('admin-products-table');
-    if (prodTable) {
-        prodTable.innerHTML = products.map(p => {
-            const finalPrice = p.price - (p.price * (p.discount / 100));
-            return `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3 flex items-center space-x-2">
-                        <img src="${p.image}" class="w-8 h-8 rounded object-cover border" onerror="this.src='https://placehold.co/100x100'">
-                        <span class="font-semibold text-slate-800 line-clamp-1">${p.title}</span>
-                    </td>
-                    <td class="p-3"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">${p.category}</span></td>
-                    <td class="p-3">${formatIDR(p.price)}</td>
-                    <td class="p-3 font-bold text-red-500">${p.discount}%</td>
-                    <td class="p-3 font-bold text-brand-600">${formatIDR(finalPrice)}</td>
-                    <td class="p-3 text-right space-x-1">
-                        <button onclick="editProduct('${p.id}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition" title="Edit">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="confirmDeleteProduct('${p.id}')" class="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition" title="Hapus">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
-    }
-
-    // Set nilai field profil
-    document.getElementById('setting-company-name').value = companyProfile.name || "";
-    document.getElementById('setting-about-text').value = companyProfile.about || "";
-
-    // Tampilkan preview logo jika ada
-    if (companyProfile.logo) {
-        document.getElementById('setting-company-logo-base64').value = companyProfile.logo;
-        document.getElementById('logo-preview-img').src = companyProfile.logo;
-        document.getElementById('logo-upload-placeholder').classList.add('hidden');
-        document.getElementById('logo-preview-container').classList.remove('hidden');
-    } else {
-        removeSelectedLogo();
-    }
-
-    const categoryWaContainer = document.getElementById('category-wa-settings-container');
-    const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
-
-    if (categoryWaContainer) {
-        categoryWaContainer.innerHTML = categories.map(cat => {
-            const currentPhone = categoryAdmins[cat] || "";
-            return `
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WA Admin Kategori ${cat}</label>
-                    <input type="text" id="wa-input-${cat}" value="${currentPhone}" placeholder="Contoh: 081234567890" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
-                </div>
-            `;
-        }).join('');
-    }
-}
-
-// PERBAIKAN SIMPAN PROFIL PERUSAHAAN
-async function saveCompanySettings() {
-    showLoading("Menyimpan Pengaturan...");
-    companyProfile.name = document.getElementById('setting-company-name').value.trim();
-    companyProfile.logo = document.getElementById('setting-company-logo-base64').value.trim(); // Gunakan data Base64
-    companyProfile.about = document.getElementById('setting-about-text').value.trim();
-
-    const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
-    categories.forEach(cat => {
-        const val = document.getElementById(`wa-input-${cat}`).value.trim();
-        categoryAdmins[cat] = val;
-    });
-
-    saveData();
-
-    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-        try {
-            showToast("Menyimpan ke Google Sheets...", "info");
-            await fetch(gasApiUrl, {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: "saveSettings",
-                    profile: companyProfile,
-                    categoryAdmins: categoryAdmins
-                })
-            });
-            showToast("Pengaturan tersimpan ke Google Sheets!", "success");
-        } catch(e) {
-            console.error(e);
-        } finally {
-            hideLoading();
-        }
-    } else {
-        hideLoading();
-        showToast("Pengaturan disimpan secara lokal!", "success");
-    }
-
-    renderLandingPage();
-}
-        // 1. DENGARKAN EVENT TOMBOL KEMBALI DI HP / BROWSER
-window.addEventListener('popstate', function(event) {
-    if (event.state && event.state.screen === 'catalog') {
-        // Jika histori browser menunjukkan sedang berada di katalog
-        selectedCategory = event.state.category;
-        showCatalogView();
-    } else {
-        // Jika menekan tombol kembali, tampilkan halaman depan
-        showLandingView();
-    }
-});
-
-// 2. FUNGSI MEMILIH KATEGORI (SUDAH DISESUAIKAN DENGAN BROWSER HISTORY)
-function selectCategory(category) {
-    selectedCategory = category;
-    
-    // Tambahkan histori baru di browser HP agar tombol kembali tidak keluar dari browser
-    history.pushState({ screen: 'catalog', category: category }, "", "#katalog");
-    
-    showCatalogView();
-}
-
-// 3. FUNGSI KEMBALI KE LANDING PAGE VIA TOMBOL DI WEB
-function goToLandingPage() {
-    // Jika ada histori #katalog, kembalikan histori browser
-    if (window.location.hash === "#katalog") {
-        history.back();
-    } else {
-        showLandingView();
-    }
-}
-
-// FUNGSI TAMPILKAN HALAMAN KATALOG
-function showCatalogView() {
-    document.getElementById('landing-screen').classList.add('hidden');
-    document.getElementById('catalog-screen').classList.remove('hidden');
-    document.getElementById('catalog-screen').classList.add('flex');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    renderProducts();
-}
-
-// FUNGSI TAMPILKAN HALAMAN DEPAN
-function showLandingView() {
-    document.getElementById('catalog-screen').classList.add('hidden');
-    document.getElementById('catalog-screen').classList.remove('flex');
-    document.getElementById('landing-screen').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-        // FUNGSI KOMPRESI & UPLOAD FOTO SAMPUL (COVER)
-function handleCoverUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    showLoading("Memproses & mengecilkan foto sampul...");
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            const maxDim = 800; // Lebar maks sampul 800px agar ringan di GSheet
-
-            if (width > maxDim) {
-                height = Math.round((height * maxDim) / width);
-                width = maxDim;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            const base64Data = canvas.toDataURL('image/jpeg', 0.6);
-            document.getElementById('setting-company-cover-base64').value = base64Data;
-            
-            document.getElementById('cover-preview-img').src = base64Data;
-            document.getElementById('cover-upload-placeholder').classList.add('hidden');
-            document.getElementById('cover-preview-container').classList.remove('hidden');
-            hideLoading();
-            showToast("Foto sampul berhasil dikompres!", "success");
-        };
-        img.src = event.target.result;
-    };
-
-    reader.readAsDataURL(file);
-}
-
-function removeSelectedCover() {
-    document.getElementById('cover-file-input').value = "";
-    document.getElementById('setting-company-cover-base64').value = "";
-    document.getElementById('cover-preview-img').src = "";
-    document.getElementById('cover-preview-container').classList.add('hidden');
-    document.getElementById('cover-upload-placeholder').classList.remove('hidden');
-}
-
-// UPDATE RENDER LANDING PAGE UNTUK TAMPILKAN SAMPUL
-function renderLandingPage() {
-    document.getElementById('display-company-name').innerText = companyProfile.name || "NAMA PERUSAHAAN";
-    document.getElementById('footer-company-name').innerText = companyProfile.name || "Nama Perusahaan";
-    document.getElementById('display-about-text').innerText = companyProfile.about || "";
-    
-    // Tampilkan Logo
-    const logoImg = document.getElementById('company-logo-img');
-    if (logoImg) {
-        logoImg.src = companyProfile.logo || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80";
-        logoImg.onerror = function() { this.src = 'https://placehold.co/300x300/1e293b/ffffff?text=Logo'; };
-    }
-
-    // Tampilkan Foto Sampul Header
-    const coverImg = document.getElementById('company-cover-img');
-    if (coverImg) {
-        coverImg.src = companyProfile.cover || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80";
-        coverImg.onerror = function() { this.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80'; };
-    }
-
-    renderCategoryButtons();
-}
-
-// UPDATE FORM ADMIN SAAT DIBUKA
-function renderAdminTables() {
-    // ... (rendering tabel produk tetap) ...
-    
-    document.getElementById('setting-company-name').value = companyProfile.name || "";
-    document.getElementById('setting-about-text').value = companyProfile.about || "";
-
-    // Load Preview Logo
-    if (companyProfile.logo) {
-        document.getElementById('setting-company-logo-base64').value = companyProfile.logo;
-        document.getElementById('logo-preview-img').src = companyProfile.logo;
-        document.getElementById('logo-upload-placeholder').classList.add('hidden');
-        document.getElementById('logo-preview-container').classList.remove('hidden');
-    } else {
-        removeSelectedLogo();
-    }
-
-    // Load Preview Foto Sampul
-    if (companyProfile.cover) {
-        document.getElementById('setting-company-cover-base64').value = companyProfile.cover;
-        document.getElementById('cover-preview-img').src = companyProfile.cover;
-        document.getElementById('cover-upload-placeholder').classList.add('hidden');
-        document.getElementById('cover-preview-container').classList.remove('hidden');
-    } else {
-        removeSelectedCover();
-    }
-
-    renderAdminWAInputs();
-}
-
-// UPDATE SIMPAN PENGATURAN PROFIL & SAMPUL
-async function saveCompanySettings() {
-    showLoading("Menyimpan Pengaturan...");
-    companyProfile.name = document.getElementById('setting-company-name').value.trim();
-    companyProfile.logo = document.getElementById('setting-company-logo-base64').value.trim();
-    companyProfile.cover = document.getElementById('setting-company-cover-base64').value.trim(); // Simpan Sampul
-    companyProfile.about = document.getElementById('setting-about-text').value.trim();
-
-    const categories = ["Cleaning Tools", "Electronic", "Technics & Tools", "Other Product"];
-    categories.forEach(cat => {
-        const val = document.getElementById(`wa-input-${cat}`).value.trim();
-        categoryAdmins[cat] = val;
-    });
-
-    saveData();
-
-    if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
-        try {
-            showToast("Menyimpan ke Google Sheets...", "info");
-            await fetch(gasApiUrl, {
-                method: 'POST',
-                body: JSON.stringify({
-                    action: "saveSettings",
-                    profile: companyProfile,
-                    categoryAdmins: categoryAdmins
-                })
-            });
-            showToast("Pengaturan tersimpan ke Google Sheets!", "success");
-        } catch(e) {
-            console.error(e);
-        } finally {
-            hideLoading();
-        }
-    } else {
-        hideLoading();
-        showToast("Pengaturan disimpan secara lokal!", "success");
-    }
-
-    renderLandingPage();
-}
     </script>
 </body>
 </html>
