@@ -53,86 +53,88 @@
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
     <!-- ========================================== -->
-    <!-- 1. HALAMAN DEPAN (LANDING PAGE PROFILE) -->
+    <!-- 1. HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
     <!-- ========================================== -->
-    <div id="landing-screen" class="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen overflow-y-auto py-6">
+    <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
 
-        <div class="w-full max-w-lg md:max-w-3xl lg:max-w-5xl bg-white text-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-slate-100 flex flex-col my-auto shrink-0 transition-all duration-300">
-            
-            <!-- Header Decorative Gradient Banner (Satu Kesatuan dengan Tombol Admin) -->
-            <div class="h-32 md:h-44 bg-gradient-to-r from-emerald-600 via-brand-600 to-teal-700 relative p-4 md:p-6 flex justify-end items-start">
-                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                <!-- Tombol Admin Panel Menyatu di Pojok Kanan Atas Kartu -->
-                <button onclick="openAdminModal()" class="relative z-10 inline-flex items-center space-x-2 bg-black/20 hover:bg-black/35 text-white border border-white/30 text-xs md:text-sm px-3.5 py-2 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
+        <!-- Header / Banner Perusahaan Full Width -->
+        <header class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white relative shadow-lg">
+            <!-- Top Navbar Bar -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-slate-800/80">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-store text-brand-400 text-sm"></i>
+                    <span class="text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
+                        Official Store Catalogue
+                    </span>
+                </div>
+                <button onclick="openAdminModal()" class="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Admin Panel</span>
                 </button>
             </div>
 
-            <!-- Profile & Content Container -->
-            <div class="px-6 md:px-10 pb-8 pt-0 flex flex-col items-center -mt-16 md:-mt-20 text-center">
-                
-                <!-- Logo Perusahaan (Bentuk Lingkaran) -->
-                <div class="relative group">
-                    <div id="logo-container" class="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 md:border-[5px] border-white bg-slate-900 text-white flex items-center justify-center shadow-xl overflow-hidden transition transform group-hover:scale-105">
-                        <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
-                    </div>
-                    <div class="absolute -bottom-1 -right-1 md:bottom-1 md:right-1 bg-brand-500 text-white w-7 h-7 md:w-9 md:h-9 rounded-full flex items-center justify-center shadow-md text-xs md:text-sm border-2 border-white">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                </div>
-
-                <!-- Nama Perusahaan -->
-                <h1 id="display-company-name" class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 md:mt-4 tracking-tight">
-                    NAMA PERUSAHAAN
-                </h1>
-                <span class="text-xs md:text-sm font-semibold text-brand-600 bg-brand-50 px-3.5 py-1 rounded-full border border-brand-200 mt-1 uppercase tracking-wider">
-                    Official Catalogue & Store
-                </span>
-
-                <!-- GRID CONTENT LAYOUT FOR TABLET & DESKTOP -->
-                <div class="w-full mt-6 md:mt-8 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-stretch text-left">
+            <!-- Hero Store Banner & Profile Info -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
                     
-                    <!-- LEFT COLUMN: TENTANG KAMI -->
-                    <div class="md:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center space-x-2 text-slate-800 mb-3 border-b border-slate-200 pb-2.5">
-                                <i class="fa-solid fa-building text-brand-600 text-sm md:text-base"></i>
-                                <h2 class="text-xs md:text-sm font-bold uppercase tracking-wider">TENTANG KAMI</h2>
-                            </div>
-                            <p id="display-about-text" class="text-xs md:text-sm text-slate-600 leading-relaxed font-normal">
-                                Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi mulai dari fashion trendi, perangkat elektronik modern, suku cadang otomotif terpercaya, hingga aksesoris gaya hidup terbaik.
-                            </p>
+                    <!-- Logo Perusahaan -->
+                    <div class="relative shrink-0">
+                        <div id="logo-container" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white/20 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden">
+                            <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-200/80 hidden md:flex items-center text-[11px] text-slate-400 space-x-1.5">
-                            <i class="fa-solid fa-shield-halved text-brand-500"></i>
-                            <span>Katalog Resmi & Terverifikasi</span>
+                        <div class="absolute bottom-1 right-1 bg-brand-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg text-sm border-2 border-slate-900">
+                            <i class="fa-solid fa-circle-check"></i>
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN: KATALOG PER KATEGORI -->
-                    <div class="md:col-span-7 text-center md:text-left flex flex-col justify-start">
-                        <div class="inline-flex md:flex items-center justify-center md:justify-start space-x-2 mb-3">
-                            <span class="h-px w-8 bg-slate-200 md:hidden"></span>
-                            <h3 class="text-xs md:text-sm font-extrabold text-slate-700 uppercase tracking-widest">LIHAT KATALOG</h3>
-                            <span class="h-px w-8 bg-slate-200"></span>
+                    <!-- Detail Profil Perusahaan -->
+                    <div class="text-center md:text-left flex-1">
+                        <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/30 text-brand-400 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider mb-2">
+                            <span>Katalog Resmi Perusahaan</span>
                         </div>
-
-                        <!-- Category Buttons List (Grid on Tablet & Desktop) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3" id="landing-category-buttons">
-                            <!-- Dynamic Buttons generated via JS -->
+                        <h1 id="display-company-name" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            NAMA PERUSAHAAN
+                        </h1>
+                        <p id="display-about-text" class="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-3xl leading-relaxed font-normal">
+                            Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi mulai dari fashion trendi, perangkat elektronik modern, suku cadang otomotif terpercaya, hingga aksesoris gaya hidup terbaik.
+                        </p>
+                        
+                        <div class="mt-5 flex flex-wrap justify-center md:justify-start gap-3 text-xs text-slate-300">
+                            <span class="inline-flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-shield-halved text-brand-400"></i> Katalog Terverifikasi
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
+                                <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pemesanan Langsung WA Admin
+                            </span>
                         </div>
                     </div>
 
                 </div>
-
             </div>
-            
-            <!-- Footer Brand -->
-            <div class="bg-slate-50 border-t border-slate-100 py-3.5 text-center text-[11px] md:text-xs text-slate-400">
+        </header>
+
+        <!-- Main Content: Pilih Kategori Full Grid -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-[11px] font-bold text-brand-600 uppercase tracking-widest block mb-1">KATALOG PRODUK</span>
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">PILIH KATEGORI</h2>
+                </div>
+                <span class="hidden sm:block text-xs text-slate-400 font-medium">Klik kategori untuk melihat produk</span>
+            </div>
+
+            <!-- Grid Kategori Buttons (Full Width on Desktop 4 Columns) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" id="landing-category-buttons">
+                <!-- Dynamic Category Cards generated via JS -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
                 &copy; <span id="current-year">2026</span> <span id="footer-company-name">Nama Perusahaan</span>. All rights reserved.
             </div>
-        </div>
+        </footer>
     </div>
 
     <!-- ========================================== -->
@@ -547,7 +549,7 @@
 
         const defaultCompanyProfile = {
             name: "PT MITRA SEJAHTERA UTAMA",
-            logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80",
+            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAKW_ltEsgUR_H0hIAFe5hPpqWb9kr9Dd_xx1HAvDPe6zhKHLZrqJXmKah&s=10",
             about: "Kami adalah perusahaan penyedia produk terpercaya yang berkomitmen menghadirkan produk-produk berkualitas tinggi mulai dari Fashion, Elektronik, Otomotif, hingga Aksesories gaya hidup terbaik."
         };
 
@@ -616,21 +618,25 @@
             document.getElementById('display-about-text').innerText = companyProfile.about || "Deskripsi profil perusahaan...";
             document.getElementById('company-logo-img').src = companyProfile.logo || defaultCompanyProfile.logo;
 
-            // Render category buttons on Landing page
+            // Render category cards on Landing page
             const container = document.getElementById('landing-category-buttons');
             const categories = ["FASHION", "ELEKTRONIK", "OTOMOTIF", "AKSESORIES"];
 
             container.innerHTML = categories.map(cat => {
                 const icon = categoryIcons[cat] || "fa-tag";
                 return `
-                    <button onclick="openCategoryCatalog('${cat}')" class="w-full py-3.5 px-4 bg-white border-2 border-slate-200 hover:border-brand-600 hover:bg-brand-50/50 rounded-2xl text-slate-800 hover:text-brand-700 font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-between shadow-sm group">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-slate-100 group-hover:bg-brand-600 text-slate-700 group-hover:text-white flex items-center justify-center transition shrink-0">
+                    <button onclick="openCategoryCatalog('${cat}')" class="w-full p-6 bg-white border border-slate-200 hover:border-brand-500 hover:shadow-xl rounded-2xl text-slate-800 transition-all duration-300 flex flex-col justify-between group text-left h-full transform hover:-translate-y-1">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-slate-100 group-hover:bg-brand-600 text-slate-700 group-hover:text-white flex items-center justify-center text-xl transition-colors duration-300 mb-4 shadow-sm">
                                 <i class="fa-solid ${icon}"></i>
                             </div>
-                            <span class="tracking-wide text-left">${cat}</span>
+                            <h3 class="font-black text-slate-900 text-lg group-hover:text-brand-600 transition tracking-tight">${cat}</h3>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Lihat seluruh koleksi produk ${cat.toLowerCase()} kualitas terbaik.</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 transition transform group-hover:translate-x-1 shrink-0"></i>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-brand-600 group-hover:text-brand-700">
+                            <span>Jelajahi Katalog</span>
+                            <i class="fa-solid fa-arrow-right transition transform group-hover:translate-x-1"></i>
+                        </div>
                     </button>
                 `;
             }).join('');
