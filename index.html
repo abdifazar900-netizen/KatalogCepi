@@ -247,7 +247,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </area>
     </div>
 
     <!-- ADMIN PANEL MODAL -->
@@ -260,7 +260,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-base">Dashboard Admin Katalog</h3>
-                        <p class="text-xs text-slate-400">Atur produk, harga diskon, profil perusahaan & WA Admin per kategori</p>
+                        <p class="text-xs text-slate-400">Atur produk, harga diskon, profil perusahaan, WA Admin & PIN</p>
                     </div>
                 </div>
                 <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-xl">
@@ -273,7 +273,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h4 class="font-bold text-slate-800">Masuk Menu Admin</h4>
-                <p class="text-xs text-slate-500">Masukkan PIN Admin. (Default PIN: <span class="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-800 font-bold">1234</span>)</p>
+                <p class="text-xs text-slate-500">Masukkan PIN Admin untuk mengakses pengaturan.</p>
                 
                 <input type="password" id="admin-pin" placeholder="Masukkan PIN" class="w-full text-center tracking-widest text-lg font-bold py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-slate-800 outline-none">
                 
@@ -290,10 +290,15 @@
                     </button>
                     <button onclick="switchAdminTab('settings')" id="tab-settings-btn" class="pb-2.5 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
                         <i class="fa-solid fa-gears"></i>
-                        <span>Profil Perusahaan & WA Admin</span>
+                        <span>Profil & WA Admin</span>
+                    </button>
+                    <button onclick="switchAdminTab('pin')" id="tab-pin-btn" class="pb-2.5 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Ganti PIN</span>
                     </button>
                 </div>
 
+                <!-- TAB 1: KELOLA PRODUK -->
                 <div id="admin-tab-products" class="space-y-6">
                     <div class="flex justify-between items-center">
                         <h4 class="text-sm font-bold text-slate-800">Daftar Produk Katalog</h4>
@@ -322,6 +327,7 @@
                     </div>
                 </div>
 
+                <!-- TAB 2: PROFIL PERUSAHAAN & WA -->
                 <div id="admin-tab-settings" class="hidden space-y-6">
                     <div class="bg-slate-50 p-4 border border-slate-200 rounded-xl space-y-4">
                         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b pb-2">Edit Profil Halaman Depan</h4>
@@ -350,6 +356,39 @@
                         Simpan Semua Pengaturan
                     </button>
                 </div>
+
+                <!-- TAB 3: GANTI PIN ADMIN -->
+                <div id="admin-tab-pin" class="hidden space-y-6">
+                    <div class="bg-slate-50 p-5 border border-slate-200 rounded-xl max-w-md mx-auto space-y-4">
+                        <div class="text-center mb-2">
+                            <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center mx-auto text-lg mb-1">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h4 class="text-sm font-bold text-slate-800">Ubah PIN Keamanan Admin</h4>
+                            <p class="text-[11px] text-slate-500">PIN baru akan disimpan secara aman di Sheet PIN Google Sheets.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">PIN Lama</label>
+                            <input type="password" id="pin-old" placeholder="Masukkan PIN saat ini" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">PIN Baru</label>
+                            <input type="password" id="pin-new" placeholder="Masukkan PIN baru" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Konfirmasi PIN Baru</label>
+                            <input type="password" id="pin-confirm" placeholder="Ulangi PIN baru" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-800 outline-none">
+                        </div>
+
+                        <button onclick="changeAdminPin()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs transition shadow-md">
+                            Perbarui PIN Admin
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -476,7 +515,6 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         };
 
-        // KONTROL OVERLAY LOADING (ANTI DOUBLE CLICK)
         function showLoading(text = "Memproses data...") {
             document.getElementById('loading-text').innerText = text;
             document.getElementById('loading-overlay').classList.remove('hidden');
@@ -707,7 +745,6 @@
             document.getElementById('admin-modal').classList.add('hidden');
         }
 
-        // FUNGSI KOMPRESI BASE64 60%
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -721,7 +758,7 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    const maxDim = 450; // Dimensi maksimal 450px
+                    const maxDim = 450;
 
                     if (width > height) {
                         if (width > maxDim) {
@@ -740,7 +777,6 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Kompresi Base64 Kualitas 60% (0.6)
                     const base64Data = canvas.toDataURL('image/jpeg', 0.6);
                     document.getElementById('form-image-base64').value = base64Data;
                     
@@ -837,7 +873,7 @@
                 }
             }
 
-            if (pin === (companyProfile.pin || "1234")) { 
+            if (pin === "1234") { 
                 isAdminLoggedIn = true;
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-content-view').classList.remove('hidden');
@@ -852,23 +888,80 @@
         function switchAdminTab(tab) {
             const tabProducts = document.getElementById('admin-tab-products');
             const tabSettings = document.getElementById('admin-tab-settings');
+            const tabPin = document.getElementById('admin-tab-pin');
+
             const btnProducts = document.getElementById('tab-products-btn');
             const btnSettings = document.getElementById('tab-settings-btn');
+            const btnPin = document.getElementById('tab-pin-btn');
+
+            tabProducts.classList.add('hidden');
+            tabSettings.classList.add('hidden');
+            tabPin.classList.add('hidden');
+
+            btnProducts.classList.remove('border-slate-900', 'text-slate-900');
+            btnProducts.classList.add('border-transparent', 'text-slate-500');
+            btnSettings.classList.remove('border-slate-900', 'text-slate-900');
+            btnSettings.classList.add('border-transparent', 'text-slate-500');
+            btnPin.classList.remove('border-slate-900', 'text-slate-900');
+            btnPin.classList.add('border-transparent', 'text-slate-500');
 
             if (tab === 'products') {
                 tabProducts.classList.remove('hidden');
-                tabSettings.classList.add('hidden');
                 btnProducts.classList.add('border-slate-900', 'text-slate-900');
-                btnProducts.classList.remove('border-transparent', 'text-slate-500');
-                btnSettings.classList.remove('border-slate-900', 'text-slate-900');
-                btnSettings.classList.add('border-transparent', 'text-slate-500');
-            } else {
-                tabProducts.classList.add('hidden');
+            } else if (tab === 'settings') {
                 tabSettings.classList.remove('hidden');
                 btnSettings.classList.add('border-slate-900', 'text-slate-900');
-                btnSettings.classList.remove('border-transparent', 'text-slate-500');
-                btnProducts.classList.remove('border-slate-900', 'text-slate-900');
-                btnProducts.classList.add('border-transparent', 'text-slate-500');
+            } else if (tab === 'pin') {
+                tabPin.classList.remove('hidden');
+                btnPin.classList.add('border-slate-900', 'text-slate-900');
+            }
+        }
+
+        async function changeAdminPin() {
+            const oldPin = document.getElementById('pin-old').value.trim();
+            const newPin = document.getElementById('pin-new').value.trim();
+            const confirmPin = document.getElementById('pin-confirm').value.trim();
+
+            if (!oldPin || !newPin || !confirmPin) {
+                showToast("Semua kolom PIN harus diisi!", "error");
+                return;
+            }
+
+            if (newPin !== confirmPin) {
+                showToast("Konfirmasi PIN baru tidak cocok!", "error");
+                return;
+            }
+
+            showLoading("Memperbarui PIN Admin...");
+
+            if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+                try {
+                    const res = await fetch(gasApiUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: "changePin",
+                            oldPin: oldPin,
+                            newPin: newPin
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        showToast(data.message || "PIN berhasil diperbarui!", "success");
+                        document.getElementById('pin-old').value = "";
+                        document.getElementById('pin-new').value = "";
+                        document.getElementById('pin-confirm').value = "";
+                    } else {
+                        showToast(data.message || "Gagal memperbarui PIN!", "error");
+                    }
+                } catch(e) {
+                    console.error(e);
+                    showToast("Gagal terhubung ke server!", "error");
+                } finally {
+                    hideLoading();
+                }
+            } else {
+                hideLoading();
+                showToast("Model demo lokal: Silakan jalankan di Google Sheets!", "info");
             }
         }
 
@@ -1042,7 +1135,6 @@
             }
         }
 
-        // FUNGSI NOTIFIKASI TOAST DITENGAH & BESAR
         function showToast(message, type = "info") {
             const container = document.getElementById('toast-container');
             if (!container) return;
