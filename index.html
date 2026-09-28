@@ -1438,6 +1438,54 @@ async function saveCompanySettings() {
 
     renderLandingPage();
 }
+        // 1. DENGARKAN EVENT TOMBOL KEMBALI DI HP / BROWSER
+window.addEventListener('popstate', function(event) {
+    if (event.state && event.state.screen === 'catalog') {
+        // Jika histori browser menunjukkan sedang berada di katalog
+        selectedCategory = event.state.category;
+        showCatalogView();
+    } else {
+        // Jika menekan tombol kembali, tampilkan halaman depan
+        showLandingView();
+    }
+});
+
+// 2. FUNGSI MEMILIH KATEGORI (SUDAH DISESUAIKAN DENGAN BROWSER HISTORY)
+function selectCategory(category) {
+    selectedCategory = category;
+    
+    // Tambahkan histori baru di browser HP agar tombol kembali tidak keluar dari browser
+    history.pushState({ screen: 'catalog', category: category }, "", "#katalog");
+    
+    showCatalogView();
+}
+
+// 3. FUNGSI KEMBALI KE LANDING PAGE VIA TOMBOL DI WEB
+function goToLandingPage() {
+    // Jika ada histori #katalog, kembalikan histori browser
+    if (window.location.hash === "#katalog") {
+        history.back();
+    } else {
+        showLandingView();
+    }
+}
+
+// FUNGSI TAMPILKAN HALAMAN KATALOG
+function showCatalogView() {
+    document.getElementById('landing-screen').classList.add('hidden');
+    document.getElementById('catalog-screen').classList.remove('hidden');
+    document.getElementById('catalog-screen').classList.add('flex');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderProducts();
+}
+
+// FUNGSI TAMPILKAN HALAMAN DEPAN
+function showLandingView() {
+    document.getElementById('catalog-screen').classList.add('hidden');
+    document.getElementById('catalog-screen').classList.remove('flex');
+    document.getElementById('landing-screen').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
     </script>
 </body>
 </html>
