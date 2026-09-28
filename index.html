@@ -49,8 +49,16 @@
 </head>
 <body class="h-full text-gray-800 antialiased font-sans bg-slate-50 flex flex-col min-h-screen relative">
 
-    <!-- GLOBAL TOAST CONTAINER (UNTUK HALAMAN UTAMA) -->
-    <div id="toast-container" class="fixed top-5 right-5 z-[99999] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+    <!-- OVERLAY LOADING GLOBAL (ANTI DOUBLE CLICK) -->
+    <div id="loading-overlay" class="fixed inset-0 z-[999999] hidden bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-2xl flex flex-col items-center space-y-3 border border-slate-700 max-w-xs w-full text-center">
+            <div class="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+            <p id="loading-text" class="text-xs font-bold tracking-wide">Memproses data...</p>
+        </div>
+    </div>
+
+    <!-- GLOBAL TOAST CONTAINER (TENGAH ATAS & LEBIH BESAR) -->
+    <div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999999] flex flex-col gap-2 max-w-md w-11/12 pointer-events-none"></div>
 
     <!-- HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
     <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
@@ -244,10 +252,6 @@
 
     <!-- ADMIN PANEL MODAL -->
     <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-        
-        <!-- TOAST KHUSUS DIDALAM ADMIN MODAL (AGAR TAMPIL DEPAN) -->
-        <div id="admin-toast-container" class="absolute top-4 right-4 z-[999] flex flex-col gap-2 max-w-xs w-full pointer-events-none"></div>
-
         <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col my-auto max-h-[90vh] relative">
             <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-800">
                 <div class="flex items-center space-x-3">
@@ -472,6 +476,16 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
         };
 
+        // KONTROL OVERLAY LOADING (ANTI DOUBLE CLICK)
+        function showLoading(text = "Memproses data...") {
+            document.getElementById('loading-text').innerText = text;
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             loadData();
             document.getElementById('current-year').innerText = new Date().getFullYear();
@@ -481,6 +495,7 @@
         async function loadData() {
             if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
                 try {
+                    showLoading("Menghubungkan ke Google Sheets...");
                     showToast("Menghubungkan ke Google Sheets...", "info");
                     const res = await fetch(`${gasApiUrl}?action=getInitialData`);
                     const data = await res.json();
@@ -497,6 +512,8 @@
                     console.error("Gagal load dari GAS:", e);
                     showToast("Gagal tersambung ke GSheet. Menggunakan penyimpanan lokal.", "error");
                     fallbackLocalData();
+                } finally {
+                    hideLoading();
                 }
             } else {
                 fallbackLocalData();
@@ -694,6 +711,7 @@
             const file = e.target.files[0];
             if (!file) return;
 
+            showLoading("Memproses & mengecilkan gambar...");
             showToast("Mengecilkan & memproses gambar...", "info");
             const reader = new FileReader();
 
@@ -728,7 +746,8 @@
                     document.getElementById('upload-preview-img').src = base64Data;
                     document.getElementById('upload-placeholder').classList.add('hidden');
                     document.getElementById('upload-preview-container').classList.remove('hidden');
-                    showToast("Gambar berhasil dipproses!", "success");
+                    hideLoading();
+                    showToast("Gambar berhasil diproses!", "success");
                 };
                 img.src = event.target.result;
             };
@@ -793,6 +812,7 @@
 
         async function verifyAdminPin() {
             const pin = document.getElementById('admin-pin').value;
+            showLoading("Memverifikasi PIN...");
             
             if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
                 try {
@@ -811,6 +831,8 @@
                     }
                 } catch(e) {
                     console.error(e);
+                } finally {
+                    hideLoading();
                 }
             }
 
@@ -823,6 +845,7 @@
             } else {
                 showToast("PIN Admin Salah!", "error");
             }
+            hideLoading();
         }
 
         function switchAdminTab(tab) {
@@ -893,6 +916,7 @@
         }
 
         async function saveCompanySettings() {
+            showLoading("Menyimpan Pengaturan...");
             companyProfile.name = document.getElementById('setting-company-name').value.trim();
             companyProfile.logo = document.getElementById('setting-company-logo').value.trim();
             companyProfile.about = document.getElementById('setting-about-text').value.trim();
@@ -919,8 +943,11 @@
                     showToast("Pengaturan tersimpan ke Google Sheets!", "success");
                 } catch(e) {
                     console.error(e);
+                } finally {
+                    hideLoading();
                 }
             } else {
+                hideLoading();
                 showToast("Pengaturan disimpan secara lokal!", "success");
             }
 
@@ -942,6 +969,7 @@
                 return;
             }
 
+            showLoading("Menyimpan produk...");
             const productData = { id, title, category, image, price, discount, description };
 
             const index = products.findIndex(p => p.id === id);
@@ -970,14 +998,18 @@
                     renderAdminTables();
                 } catch(e) {
                     console.error(e);
+                } finally {
+                    hideLoading();
                 }
             } else {
+                hideLoading();
                 showToast("Produk tersimpan secara lokal!", "success");
             }
         }
 
         async function executeDeleteProduct() {
             if (pendingDeleteId) {
+                showLoading("Menghapus produk...");
                 const targetId = pendingDeleteId;
                 products = products.filter(p => p.id !== targetId);
                 saveData();
@@ -999,51 +1031,47 @@
                         renderAdminTables();
                     } catch(e) {
                         console.error(e);
+                    } finally {
+                        hideLoading();
                     }
                 } else {
+                    hideLoading();
                     showToast("Produk dihapus dari penyimpanan lokal.", "info");
                 }
             }
         }
 
-        // FUNGSI TOAST CERDAS (OTOMATIS MEMILIH KONTANER DIDALAM MODAL ATAU OUTSIDE)
+        // FUNGSI NOTIFIKASI TOAST DITENGAH & BESAR
         function showToast(message, type = "info") {
-            const adminModal = document.getElementById('admin-modal');
-            const isAdminOpen = adminModal && !adminModal.classList.contains('hidden');
-
-            // Pilih container berdasarkan status modal
-            const container = isAdminOpen 
-                ? document.getElementById('admin-toast-container') 
-                : document.getElementById('toast-container');
-
+            const container = document.getElementById('toast-container');
             if (!container) return;
 
             const toast = document.createElement('div');
-            let bgClass = "bg-slate-900 text-white";
+            let bgClass = "bg-slate-900 text-white border border-slate-700";
             let iconClass = "fa-circle-info text-blue-400";
 
             if (type === "success") {
-                bgClass = "bg-emerald-900 text-white border border-emerald-700";
+                bgClass = "bg-emerald-900 text-white border border-emerald-600 shadow-emerald-900/50";
                 iconClass = "fa-circle-check text-emerald-400";
             } else if (type === "error") {
-                bgClass = "bg-red-900 text-white border border-red-700";
+                bgClass = "bg-red-900 text-white border border-red-600 shadow-red-900/50";
                 iconClass = "fa-triangle-exclamation text-red-400";
             }
 
-            toast.className = `p-3 rounded-xl shadow-2xl ${bgClass} text-xs font-semibold flex items-center space-x-2 transition-all transform translate-y-2 opacity-0 pointer-events-auto`;
+            toast.className = `p-4 rounded-2xl shadow-2xl ${bgClass} text-sm font-bold flex items-center space-x-3 transition-all transform -translate-y-4 opacity-0 pointer-events-auto backdrop-blur-md`;
             toast.innerHTML = `
-                <i class="fa-solid ${iconClass} text-base"></i>
-                <span class="flex-1">${message}</span>
+                <i class="fa-solid ${iconClass} text-xl shrink-0"></i>
+                <span class="flex-1 text-center">${message}</span>
             `;
 
             container.appendChild(toast);
 
             setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
+                toast.classList.remove('-translate-y-4', 'opacity-0');
             }, 10);
 
             setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
+                toast.classList.add('opacity-0', '-translate-y-4');
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
