@@ -61,55 +61,62 @@
     <div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999999] flex flex-col gap-2 max-w-md w-11/12 pointer-events-none"></div>
 
     <!-- HALAMAN DEPAN (LANDING PAGE PROFILE FULL WIDTH) -->
-    <div id="landing-screen" class="flex-1 flex flex-col min-h-screen bg-slate-50">
-        <header class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white relative shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-slate-800/80">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-store text-brand-400 text-sm"></i>
-                    <span class="text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
-                        Official Catalogue
+   <header class="relative bg-slate-900 text-white overflow-hidden shadow-lg min-h-[280px] sm:min-h-[340px] flex flex-col justify-between">
+    <!-- GAMBAR SAMPUL (COVER PHOTO) -->
+    <img id="company-cover-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80" alt="Foto Sampul" class="absolute inset-0 w-full h-full object-cover z-0">
+    
+    <!-- OVERLAY GELAP (Agar teks & logo tetap kontras & terbaca) -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-slate-900/40 z-10"></div>
+
+    <!-- TOP BAR -->
+    <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center border-b border-white/10 backdrop-blur-xs">
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-store text-brand-400 text-sm"></i>
+            <span class="text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
+                Official Store Catalogue
+            </span>
+        </div>
+        <button onclick="openAdminModal()" class="inline-flex items-center space-x-2 bg-slate-900/60 hover:bg-slate-900/90 text-white border border-white/20 text-xs sm:text-sm px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Admin Panel</span>
+        </button>
+    </div>
+
+    <!-- PROFIL HERO CONTENT -->
+    <div class="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div class="flex flex-col md:flex-row items-center md:items-end gap-5 sm:gap-6">
+            <div class="relative shrink-0">
+                <div id="logo-container" class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white/30 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden backdrop-blur-sm">
+                    <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute bottom-1 right-1 bg-brand-500 text-white w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg text-xs sm:text-sm border-2 border-slate-900">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/40 backdrop-blur-md text-brand-300 text-[11px] px-3 py-0.5 rounded-full font-semibold uppercase tracking-wider mb-2">
+                    <span>Katalog Resmi Perusahaan</span>
+                </div>
+                <h1 id="display-company-name" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
+                    NAMA PERUSAHAAN
+                </h1>
+                <p id="display-about-text" class="text-xs sm:text-sm text-slate-200 mt-2 max-w-3xl leading-relaxed font-normal drop-shadow">
+                    Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi dari berbagai kategori.
+                </p>
+                
+                <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-2.5 text-xs text-slate-200">
+                    <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
+                        <i class="fa-solid fa-shield-halved text-brand-400"></i> Katalog Terverifikasi
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pemesanan Langsung WA Admin
                     </span>
                 </div>
-                <button onclick="openAdminModal()" class="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm px-3.5 py-1.5 rounded-xl backdrop-blur-md transition shadow-sm font-semibold">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Admin Panel</span>
-                </button>
             </div>
-
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-                    <div class="relative shrink-0">
-                        <div id="logo-container" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white/20 bg-slate-800 text-white flex items-center justify-center shadow-2xl overflow-hidden">
-                            <img id="company-logo-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=80" alt="Logo Perusahaan" class="w-full h-full object-cover">
-                        </div>
-                        <div class="absolute bottom-1 right-1 bg-brand-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg text-sm border-2 border-slate-900">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    </div>
-
-                    <div class="text-center md:text-left flex-1">
-                        <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/30 text-brand-400 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider mb-2">
-                            <span>Katalog Resmi Perusahaan</span>
-                        </div>
-                        <h1 id="display-company-name" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                            NAMA PERUSAHAAN
-                        </h1>
-                        <p id="display-about-text" class="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-3xl leading-relaxed font-normal">
-                            Kami adalah perusahaan terdepan yang menyediakan berbagai produk berkualitas tinggi dari berbagai kategori.
-                        </p>
-                        
-                        <div class="mt-5 flex flex-wrap justify-center md:justify-start gap-3 text-xs text-slate-300">
-                            <span class="inline-flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
-                                <i class="fa-solid fa-shield-halved text-brand-400"></i> Katalog Terverifikasi
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10 backdrop-blur-sm">
-                                <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pemesanan Langsung WA Admin
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+        </div>
+    </div>
+</header>
 
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
             <div class="flex items-center justify-between mb-6">
