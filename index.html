@@ -1451,18 +1451,28 @@ function executeGlobalSearch() {
 }
 
 // RENDER PRODUK DARI SEMUA KATEGORI
-function renderProductsGlobal(searchTerm = "") {
-    const query = searchTerm.toLowerCase().trim();
+function renderProducts() {
+    const searchInput = document.getElementById('search-input');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     
-    document.getElementById('active-category-title').innerText = "Hasil Pencarian Produk";
-    document.getElementById('active-category-admin-phone').innerText = "Layanan Admin";
+    // Jika dipilih pencarian semua kategori
+    if (selectedCategory === "Semua Kategori") {
+        renderProductsGlobal(searchTerm);
+        return;
+    }
 
-    // Filter produk lintas SEMUA kategori
+    document.getElementById('active-category-title').innerText = selectedCategory;
+    
+    const adminPhone = categoryAdmins[selectedCategory] || "081234567890";
+    document.getElementById('active-category-admin-phone').innerText = adminPhone;
+
     const filteredProducts = products.filter(p => {
-        return p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+        const matchCategory = p.category === selectedCategory;
+        const matchSearch = p.title.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
+        return matchCategory && matchSearch;
     });
 
-    document.getElementById('product-count-text').innerText = `Ditemukan ${filteredProducts.length} produk untuk kata kunci "${searchTerm}"`;
+    document.getElementById('product-count-text').innerText = `Menampilkan ${filteredProducts.length} produk pilihan`;
 
     const grid = document.getElementById('product-grid');
     const emptyState = document.getElementById('empty-state');
@@ -1483,7 +1493,6 @@ function renderProductsGlobal(searchTerm = "") {
                     <div class="relative aspect-square bg-slate-100 overflow-hidden">
                         <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Produk'">
                         ${p.discount > 0 ? `<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow">${p.discount}% OFF</span>` : ''}
-                        <span class="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[9px] font-bold px-2 py-0.5 rounded backdrop-blur-xs">${p.category}</span>
                     </div>
                     <div class="p-3.5 flex-1 flex flex-col justify-between">
                         <div>
