@@ -49,7 +49,13 @@
 </head>
 <body class="h-full text-gray-800 antialiased font-sans bg-slate-50 flex flex-col min-h-screen relative">
 
-    <!-- OVERLAY LOADING GLOBAL -->
+    <!-- INDIKATOR SINKRONISASI DATA DI HEADER (HALUS & TIDAK MENGGANGGU) -->
+    <div id="sync-banner" class="hidden bg-amber-500 text-white text-[11px] font-bold py-1 px-4 text-center sticky top-0 z-50 shadow-sm flex items-center justify-center space-x-2">
+        <div class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        <span>Menyinkronkan data terbaru dari server...</span>
+    </div>
+
+    <!-- OVERLAY LOADING GLOBAL (HANYA UNTUK SIMPAN/HAPUS DATA ADMIN) -->
     <div id="loading-overlay" class="fixed inset-0 z-[999999] hidden bg-slate-900/60 backdrop-blur-sm flex flex-col items-center justify-center p-4">
         <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-2xl flex flex-col items-center space-y-3 border border-slate-700 max-w-xs w-full text-center">
             <div class="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
@@ -594,19 +600,17 @@
             document.getElementById('footer-year').innerText = new Date().getFullYear();
         });
 
-        // HANDLE NAVIGASI TOMBOL KEMBALI HP (DETAIL PRODUK & ADMIN PANEL)
+        // NAVIGASI BACK HP (DETAIL PRODUK & ADMIN PANEL)
         window.addEventListener('popstate', function(event) {
             const modalDetail = document.getElementById('product-modal');
             const modalAdmin = document.getElementById('admin-modal');
 
-            // 1. Tutup modal detail produk jika terbuka
             if (modalDetail && !modalDetail.classList.contains('hidden')) {
                 modalDetail.classList.add('hidden');
                 activeProduct = null;
                 return;
             }
 
-            // 2. Tutup modal admin panel jika terbuka
             if (modalAdmin && !modalAdmin.classList.contains('hidden')) {
                 isAdminLoggedIn = false;
                 modalAdmin.classList.add('hidden');
@@ -616,7 +620,6 @@
                 return;
             }
 
-            // 3. Navigasi halaman catalog/landing
             if (event.state && event.state.screen === 'catalog') {
                 selectedCategory = event.state.category;
                 showCatalogView();
@@ -625,11 +628,18 @@
             }
         });
 
+        // 🚀 DUAL STORAGE LOAD DATA (LOCAL FIRST + BACKGROUND SYNC)
         async function loadData() {
+            // 1. MEMUAT DENGAN TAMPILAN INSTAN (0 DETIK) DARI MEMORI LOKAL BROWSER
+            fallbackLocalData();
+            renderLandingPage();
+
+            // 2. LAKUKAN SINKRONISASI DENGAN GOOGLE SHEETS DI BACKGROUND
             if (gasApiUrl && gasApiUrl !== "PASANG_URL_WEB_APP_GAS_ANDA_DI_SINI") {
+                const syncBanner = document.getElementById('sync-banner');
+                if (syncBanner) syncBanner.classList.remove('hidden');
+
                 try {
-                    showLoading("Menghubungkan ke Google Sheets...");
-                    showToast("Menghubungkan ke Google Sheets...", "info");
                     const res = await fetch(`${gasApiUrl}?action=getInitialData`);
                     const data = await res.json();
 
@@ -637,22 +647,22 @@
                         products = data.products || [];
                         companyProfile = data.profile || defaultCompanyProfile;
                         categoryAdmins = data.categoryAdmins || defaultCategoryAdmins;
-                        showToast("Data berhasil dimuat dari Google Sheets!", "success");
-                    } else {
-                        fallbackLocalData();
+
+                        // Perbarui memori penyimpanan lokal agar sinkron
+                        saveData();
+
+                        // Perbarui tampilan web secara halus tanpa merestart halaman
+                        renderLandingPage();
+                        if (!document.getElementById('catalog-screen').classList.contains('hidden')) {
+                            renderProducts();
+                        }
                     }
                 } catch (e) {
-                    console.error("Gagal load dari GAS:", e);
-                    showToast("Gagal tersambung ke GSheet. Menggunakan penyimpanan lokal.", "error");
-                    fallbackLocalData();
+                    console.error("Gagal sinkronisasi dari GAS:", e);
                 } finally {
-                    hideLoading();
+                    if (syncBanner) syncBanner.classList.add('hidden');
                 }
-            } else {
-                fallbackLocalData();
             }
-
-            renderLandingPage();
         }
 
         function fallbackLocalData() {
@@ -890,7 +900,6 @@
             }
         }
 
-        // BUKA MODAL DETAIL PRODUK
         function openProductModal(id) {
             activeProduct = products.find(p => p.id === id);
             if (!activeProduct) return;
@@ -919,7 +928,6 @@
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
-        // TUTUP MODAL DETAIL PRODUK
         function closeProductModal() {
             if (window.location.hash === "#detail") {
                 history.back();
@@ -946,18 +954,15 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
         }
 
-        // BUKA MODAL ADMIN PANEL (+ HISTORI BROWSER)
         function openAdminModal() {
             document.getElementById('admin-login-view').classList.remove('hidden');
             document.getElementById('admin-content-view').classList.add('hidden');
             document.getElementById('admin-pin').value = "";
             
-            // Tambahkan histori browser baru saat admin panel dibuka
             history.pushState({ screen: 'admin' }, "", "#admin");
             document.getElementById('admin-modal').classList.remove('hidden');
         }
 
-        // TUTUP MODAL ADMIN PANEL
         function closeAdminModal() {
             if (window.location.hash === "#admin") {
                 history.back();
@@ -1234,7 +1239,7 @@
                         }
                     } else {
                         if (height > maxDim) {
-                            width = Math.round((height * maxDim) / height);
+                            width = Math.round((width * maxDim) / height);
                             height = maxDim;
                         }
                     }
