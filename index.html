@@ -121,7 +121,7 @@
                     <i class="fa-solid fa-magnifying-glass text-brand-600 mr-1"></i> Cari Semua Produk
                 </label>
                 <div class="relative w-full">
-                    <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(event)" placeholder="Ketik nama produk yang dicari,contoh: Sapu, Mesin, Speaker..." class="w-full pl-10 pr-24 py-3 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition">
+                    <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(event)" placeholder="Ketik nama produk yang dicari, contoh: Sapu, Mesin, Speaker..." class="w-full pl-10 pr-24 py-3 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition">
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-sm"></i>
                     </span>
@@ -594,12 +594,23 @@
             document.getElementById('footer-year').innerText = new Date().getFullYear();
         });
 
-        // HANDLE NAVIGASI TOMBOL KEMBALI HP
+        // HANDLE NAVIGASI TOMBOL KEMBALI HP (TERMASUK DETAIL MODAL)
         window.addEventListener('popstate', function(event) {
+            const modalDetail = document.getElementById('product-modal');
+            
+            // Jika modal detail produk sedang terbuka, tutup modalnya saja
+            if (modalDetail && !modalDetail.classList.contains('hidden')) {
+                modalDetail.classList.add('hidden');
+                activeProduct = null;
+                return;
+            }
+
+            // Jika di halaman katalog
             if (event.state && event.state.screen === 'catalog') {
                 selectedCategory = event.state.category;
                 showCatalogView();
             } else {
+                // Kembali ke landing page
                 showLandingView();
             }
         });
@@ -705,7 +716,7 @@
         }
 
         function goToLandingPage() {
-            if (window.location.hash === "#katalog") {
+            if (window.location.hash === "#katalog" || window.location.hash === "#detail") {
                 history.back();
             } else {
                 showLandingView();
@@ -727,10 +738,43 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // DENGARKAN TOMBOL ENTER PADA INPUT GLOBAL SEARCH
+        function handleGlobalSearch(event) {
+            if (event.key === 'Enter') {
+                executeGlobalSearch();
+            }
+        }
+
+        // EKSEKUSI PENCARIAN GLOBAL
+        function executeGlobalSearch() {
+            const query = document.getElementById('global-search-input').value.trim();
+            if (!query) {
+                showToast("Masukkan kata kunci produk yang ingin dicari!", "error");
+                return;
+            }
+
+            selectedCategory = "Semua Kategori";
+            history.pushState({ screen: 'catalog', category: 'Semua Kategori' }, "", "#katalog");
+            showCatalogView();
+
+            const catalogSearchInput = document.getElementById('search-input');
+            if (catalogSearchInput) {
+                catalogSearchInput.value = query;
+            }
+            
+            renderProductsGlobal(query);
+        }
+
+        // RENDER PRODUK KATEGORI ATAS / PENCARIAN
         function renderProducts() {
             const searchInput = document.getElementById('search-input');
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
             
+            if (selectedCategory === "Semua Kategori") {
+                renderProductsGlobal(searchTerm);
+                return;
+            }
+
             document.getElementById('active-category-title').innerText = selectedCategory;
             
             const adminPhone = categoryAdmins[selectedCategory] || "081234567890";
@@ -785,6 +829,62 @@
             }
         }
 
+        // RENDER PRODUK GLOBAL LINTAS KATEGORI
+        function renderProductsGlobal(searchTerm = "") {
+            const query = searchTerm.toLowerCase().trim();
+            
+            document.getElementById('active-category-title').innerText = "Hasil Pencarian Produk";
+            document.getElementById('active-category-admin-phone').innerText = "Layanan Admin";
+
+            const filteredProducts = products.filter(p => {
+                return p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+            });
+
+            document.getElementById('product-count-text').innerText = `Ditemukan ${filteredProducts.length} produk untuk kata kunci "${searchTerm}"`;
+
+            const grid = document.getElementById('product-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            if (filteredProducts.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+            } else {
+                emptyState.classList.add('hidden');
+                emptyState.classList.remove('flex');
+                grid.classList.remove('hidden');
+
+                grid.innerHTML = filteredProducts.map(p => {
+                    const finalPrice = p.price - (p.price * (p.discount / 100));
+                    return `
+                        <div onclick="openProductModal('${p.id}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer flex flex-col group">
+                            <div class="relative aspect-square bg-slate-100 overflow-hidden">
+                                <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Produk'">
+                                ${p.discount > 0 ? `<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow">${p.discount}% OFF</span>` : ''}
+                                <span class="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[9px] font-bold px-2 py-0.5 rounded backdrop-blur-xs">${p.category}</span>
+                            </div>
+                            <div class="p-3.5 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-xs font-bold text-slate-800 line-clamp-2 mb-1.5 group-hover:text-brand-600 transition">${p.title}</h3>
+                                </div>
+                                <div>
+                                    <div class="flex items-baseline space-x-1.5">
+                                        <span class="text-sm font-black text-brand-600">${formatIDR(finalPrice)}</span>
+                                        ${p.discount > 0 ? `<span class="text-[10px] text-slate-400 line-through">${formatIDR(p.price)}</span>` : ''}
+                                    </div>
+                                    <button class="w-full mt-3 py-1.5 bg-slate-100 group-hover:bg-brand-600 text-slate-700 group-hover:text-white rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1">
+                                        <i class="fa-solid fa-eye text-xs"></i>
+                                        <span>Lihat Detail</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // BUKA MODAL DETAIL PRODUK (+ HISTORI BROWSER)
         function openProductModal(id) {
             activeProduct = products.find(p => p.id === id);
             if (!activeProduct) return;
@@ -809,12 +909,20 @@
                 document.getElementById('modal-original-price').classList.add('hidden');
             }
 
+            // Tambahkan histori browser baru saat detail dibuka
+            history.pushState({ screen: 'detail', productId: id }, "", "#detail");
+
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
+        // TUTUP MODAL DETAIL PRODUK (VIA TOMBOL X / SILANG)
         function closeProductModal() {
-            document.getElementById('product-modal').classList.add('hidden');
-            activeProduct = null;
+            if (window.location.hash === "#detail") {
+                history.back();
+            } else {
+                document.getElementById('product-modal').classList.add('hidden');
+                activeProduct = null;
+            }
         }
 
         function orderViaWA() {
@@ -1419,101 +1527,6 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
-        // DENGARKAN TOMBOL ENTER PADA INPUT GLOBAL SEARCH
-function handleGlobalSearch(event) {
-    if (event.key === 'Enter') {
-        executeGlobalSearch();
-    }
-}
-
-// EKSEKUSI PENCARIAN GLOBAL
-function executeGlobalSearch() {
-    const query = document.getElementById('global-search-input').value.trim();
-    if (!query) {
-        showToast("Masukkan kata kunci produk yang ingin dicari!", "error");
-        return;
-    }
-
-    // Set status kategori aktif menjadi "Semua Produk"
-    selectedCategory = "Semua Kategori";
-    
-    // Pindah tampilan ke halaman katalog
-    history.pushState({ screen: 'catalog', category: 'Semua Kategori' }, "", "#katalog");
-    showCatalogView();
-
-    // Isikan kata kunci ke pencarian katalog dan jalankan filter
-    const catalogSearchInput = document.getElementById('search-input');
-    if (catalogSearchInput) {
-        catalogSearchInput.value = query;
-    }
-    
-    renderProductsGlobal(query);
-}
-
-// RENDER PRODUK DARI SEMUA KATEGORI
-function renderProducts() {
-    const searchInput = document.getElementById('search-input');
-    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-    
-    // Jika dipilih pencarian semua kategori
-    if (selectedCategory === "Semua Kategori") {
-        renderProductsGlobal(searchTerm);
-        return;
-    }
-
-    document.getElementById('active-category-title').innerText = selectedCategory;
-    
-    const adminPhone = categoryAdmins[selectedCategory] || "081234567890";
-    document.getElementById('active-category-admin-phone').innerText = adminPhone;
-
-    const filteredProducts = products.filter(p => {
-        const matchCategory = p.category === selectedCategory;
-        const matchSearch = p.title.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
-        return matchCategory && matchSearch;
-    });
-
-    document.getElementById('product-count-text').innerText = `Menampilkan ${filteredProducts.length} produk pilihan`;
-
-    const grid = document.getElementById('product-grid');
-    const emptyState = document.getElementById('empty-state');
-
-    if (filteredProducts.length === 0) {
-        grid.classList.add('hidden');
-        emptyState.classList.remove('hidden');
-        emptyState.classList.add('flex');
-    } else {
-        emptyState.classList.add('hidden');
-        emptyState.classList.remove('flex');
-        grid.classList.remove('hidden');
-
-        grid.innerHTML = filteredProducts.map(p => {
-            const finalPrice = p.price - (p.price * (p.discount / 100));
-            return `
-                <div onclick="openProductModal('${p.id}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer flex flex-col group">
-                    <div class="relative aspect-square bg-slate-100 overflow-hidden">
-                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Produk'">
-                        ${p.discount > 0 ? `<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow">${p.discount}% OFF</span>` : ''}
-                    </div>
-                    <div class="p-3.5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xs font-bold text-slate-800 line-clamp-2 mb-1.5 group-hover:text-brand-600 transition">${p.title}</h3>
-                        </div>
-                        <div>
-                            <div class="flex items-baseline space-x-1.5">
-                                <span class="text-sm font-black text-brand-600">${formatIDR(finalPrice)}</span>
-                                ${p.discount > 0 ? `<span class="text-[10px] text-slate-400 line-through">${formatIDR(p.price)}</span>` : ''}
-                            </div>
-                            <button class="w-full mt-3 py-1.5 bg-slate-100 group-hover:bg-brand-600 text-slate-700 group-hover:text-white rounded-xl text-[11px] font-bold transition flex items-center justify-center space-x-1">
-                                <i class="fa-solid fa-eye text-xs"></i>
-                                <span>Lihat Detail</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-}
     </script>
 </body>
 </html>
