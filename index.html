@@ -594,23 +594,33 @@
             document.getElementById('footer-year').innerText = new Date().getFullYear();
         });
 
-        // HANDLE NAVIGASI TOMBOL KEMBALI HP (TERMASUK DETAIL MODAL)
+        // HANDLE NAVIGASI TOMBOL KEMBALI HP (DETAIL PRODUK & ADMIN PANEL)
         window.addEventListener('popstate', function(event) {
             const modalDetail = document.getElementById('product-modal');
-            
-            // Jika modal detail produk sedang terbuka, tutup modalnya saja
+            const modalAdmin = document.getElementById('admin-modal');
+
+            // 1. Tutup modal detail produk jika terbuka
             if (modalDetail && !modalDetail.classList.contains('hidden')) {
                 modalDetail.classList.add('hidden');
                 activeProduct = null;
                 return;
             }
 
-            // Jika di halaman katalog
+            // 2. Tutup modal admin panel jika terbuka
+            if (modalAdmin && !modalAdmin.classList.contains('hidden')) {
+                isAdminLoggedIn = false;
+                modalAdmin.classList.add('hidden');
+                document.getElementById('admin-login-view').classList.remove('hidden');
+                document.getElementById('admin-content-view').classList.add('hidden');
+                document.getElementById('admin-pin').value = "";
+                return;
+            }
+
+            // 3. Navigasi halaman catalog/landing
             if (event.state && event.state.screen === 'catalog') {
                 selectedCategory = event.state.category;
                 showCatalogView();
             } else {
-                // Kembali ke landing page
                 showLandingView();
             }
         });
@@ -716,7 +726,7 @@
         }
 
         function goToLandingPage() {
-            if (window.location.hash === "#katalog" || window.location.hash === "#detail") {
+            if (window.location.hash === "#katalog" || window.location.hash === "#detail" || window.location.hash === "#admin") {
                 history.back();
             } else {
                 showLandingView();
@@ -738,14 +748,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // DENGARKAN TOMBOL ENTER PADA INPUT GLOBAL SEARCH
         function handleGlobalSearch(event) {
             if (event.key === 'Enter') {
                 executeGlobalSearch();
             }
         }
 
-        // EKSEKUSI PENCARIAN GLOBAL
         function executeGlobalSearch() {
             const query = document.getElementById('global-search-input').value.trim();
             if (!query) {
@@ -765,7 +773,6 @@
             renderProductsGlobal(query);
         }
 
-        // RENDER PRODUK KATEGORI ATAS / PENCARIAN
         function renderProducts() {
             const searchInput = document.getElementById('search-input');
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
@@ -829,7 +836,6 @@
             }
         }
 
-        // RENDER PRODUK GLOBAL LINTAS KATEGORI
         function renderProductsGlobal(searchTerm = "") {
             const query = searchTerm.toLowerCase().trim();
             
@@ -884,7 +890,7 @@
             }
         }
 
-        // BUKA MODAL DETAIL PRODUK (+ HISTORI BROWSER)
+        // BUKA MODAL DETAIL PRODUK
         function openProductModal(id) {
             activeProduct = products.find(p => p.id === id);
             if (!activeProduct) return;
@@ -909,13 +915,11 @@
                 document.getElementById('modal-original-price').classList.add('hidden');
             }
 
-            // Tambahkan histori browser baru saat detail dibuka
             history.pushState({ screen: 'detail', productId: id }, "", "#detail");
-
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
-        // TUTUP MODAL DETAIL PRODUK (VIA TOMBOL X / SILANG)
+        // TUTUP MODAL DETAIL PRODUK
         function closeProductModal() {
             if (window.location.hash === "#detail") {
                 history.back();
@@ -942,19 +946,28 @@
             window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
         }
 
+        // BUKA MODAL ADMIN PANEL (+ HISTORI BROWSER)
         function openAdminModal() {
             document.getElementById('admin-login-view').classList.remove('hidden');
             document.getElementById('admin-content-view').classList.add('hidden');
             document.getElementById('admin-pin').value = "";
+            
+            // Tambahkan histori browser baru saat admin panel dibuka
+            history.pushState({ screen: 'admin' }, "", "#admin");
             document.getElementById('admin-modal').classList.remove('hidden');
         }
 
+        // TUTUP MODAL ADMIN PANEL
         function closeAdminModal() {
-            isAdminLoggedIn = false;
-            document.getElementById('admin-modal').classList.add('hidden');
-            document.getElementById('admin-login-view').classList.remove('hidden');
-            document.getElementById('admin-content-view').classList.add('hidden');
-            document.getElementById('admin-pin').value = "";
+            if (window.location.hash === "#admin") {
+                history.back();
+            } else {
+                isAdminLoggedIn = false;
+                document.getElementById('admin-modal').classList.add('hidden');
+                document.getElementById('admin-login-view').classList.remove('hidden');
+                document.getElementById('admin-content-view').classList.add('hidden');
+                document.getElementById('admin-pin').value = "";
+            }
         }
 
         function handleImageUpload(e) {
@@ -1221,7 +1234,7 @@
                         }
                     } else {
                         if (height > maxDim) {
-                            width = Math.round((width * maxDim) / height);
+                            width = Math.round((height * maxDim) / height);
                             height = maxDim;
                         }
                     }
